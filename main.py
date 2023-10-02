@@ -114,6 +114,7 @@ for data_type in data_map_dict:
         include_column_header=True, resize=True,
     )
 
+    print(f"# Updated: {data_type}")
 
 # 
 # spreadsheet_id = "1K_NEb7HIIY0X5aCJ1kzrJh5Ieor-ACloU_V6VDotpzI"
