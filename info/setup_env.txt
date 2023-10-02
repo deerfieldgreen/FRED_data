@@ -1,0 +1,9 @@
+# conda create -n fred_env python=3.10
+# conda deactivate
+# conda remove --name fred_env --all
+
+# pip install pandas numpy requests matplotlib seaborn joblib tqdm scikit-learn scipy pyyaml
+# pip install fredapi
+
+
+

@@ -1,2 +1,10 @@
 
+fred_api_key: "eda66738cbb3cb283a387c3a43abadd9"
+col_date: "DATE"
+
+data_map_dict:
+    dff: 
+        data_ref: "DFF"
+
+
 
