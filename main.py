@@ -91,10 +91,6 @@ for data_type in data_map_dict:
     data_df_new = data_df_new.reset_index()
     data_df_new.columns = data_df_init.columns
 
-    ##-##
-    data_df_new = data_df_new.head(25287)
-    ##-##
-
     data_df = pd.concat([data_df_init, data_df_new])
     data_df.reset_index(drop=True, inplace=True)
 
@@ -115,6 +111,16 @@ for data_type in data_map_dict:
     )
 
     print(f"# Updated: {data_type}")
+
+
+
+
+
+
+
+
+
+
 
 # 
 # spreadsheet_id = "1K_NEb7HIIY0X5aCJ1kzrJh5Ieor-ACloU_V6VDotpzI"
