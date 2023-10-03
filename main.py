@@ -87,9 +87,14 @@ for data_type in data_map_dict:
     data_df_init = pd.read_csv(dataPath / data_type / "data.csv")
     data_df_init[col_date] = pd.to_datetime(data_df_init[col_date])
 
+    if data_ref not in data_df_init.columns:
+        print(f"# {data_type}: data column not found !!")
+        continue
+
     data_df_new = fred.get_series(data_ref)
     data_df_new = data_df_new.reset_index()
-    data_df_new.columns = data_df_init.columns
+    # data_df_new.columns = data_df_init.columns
+    data_df_new.columns = [col_date, data_ref]
 
     data_df = pd.concat([data_df_init, data_df_new])
     data_df.reset_index(drop=True, inplace=True)
@@ -110,7 +115,7 @@ for data_type in data_map_dict:
         include_column_header=True, resize=True,
     )
 
-    print(f"# Updated: {data_type}")
+    print(f"# {data_type}: Updated")
 
 
 
