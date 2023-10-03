@@ -7,4 +7,38 @@ data_map_dict:
         data_ref: "DFF"
         spreadsheet_id: "1K_NEb7HIIY0X5aCJ1kzrJh5Ieor-ACloU_V6VDotpzI"
 
+    rate_aus_3m_bank:
+        data_ref: "IR3TIB01AUM156N"
+        spreadsheet_id: "1wPBUKNvqsDXJg7eUIruIUzG9h6zYsFInfuZSPhoR-oA"
+     
+    rate_cnd_3m_bank:
+        data_ref: "IR3TIB01CAM156N"
+        spreadsheet_id: "1k8pMhI4emmbjLPb3c7T42sAu-wXU6iDrPJ__vlXnBc8"
 
+    rate_chf_3m_bank:
+        data_ref: "IR3TIB01CHM156N"
+        spreadsheet_id: "1Kdgy6cifEZuoY0G8D8LVI8aC8z7YXsW6eoKXmHPghbI"
+
+    rate_deu_3m_bank:
+        data_ref: "IR3TIB01DEM156N"
+        spreadsheet_id: "1UeJsYbH8Cm_OgYFN9LyYtOQ5-bvHgoUBW8Zj7SlVnck"
+
+    rate_eur_3m_bank:
+        data_ref: "IR3TIB01EZM156N"
+        spreadsheet_id: "1ebQFazHrWvxhTI7c6XWZdVH8gVkvbxaTjaFMAy5AMtA"
+        
+    rate_gbp_3m_bank:
+        data_ref: "IR3TIB01GBM156N"
+        spreadsheet_id: "1K-e6vLtKcmU3L2-cVQq9vIaezu1lFDENJCX5EL02cWs"
+
+    rate_jpn_3m_bank:
+        data_ref: "IR3TIB01JPM156N"
+        spreadsheet_id: "1TD7XYeuj_BaNcgJEOvFU1uKfSMYehlLDMRYXKWWHBss"
+
+    rate_deu_lt_gov:
+        data_ref: "IRLTLT01DEM156N"
+        spreadsheet_id: "14sOQ0PBeW4ldMrkEOef9eMqE0BJ6nssPXkP2NCeVz8I"
+
+    rate_eur_lt_gov:
+        data_ref: "IRLTLT01EZM156N"
+        spreadsheet_id: "1UDsXTHGiIc8gHFfuZyyb2shSn7Nt5Je4HOYoWrLUQtY" 
