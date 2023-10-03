@@ -92,6 +92,7 @@ for data_type in data_map_dict:
         continue
 
     data_df_new = fred.get_series(data_ref)
+    data_df_new = data_df_new.dropna()
     data_df_new = data_df_new.reset_index()
     # data_df_new.columns = data_df_init.columns
     data_df_new.columns = [col_date, data_ref]
