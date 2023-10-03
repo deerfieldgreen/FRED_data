@@ -16,6 +16,12 @@ from pathlib import Path
 import joblib
 from copy import deepcopy
 
+##-##
+os.chdir(sys.path[0])
+##-##
+
+
+
 root_folder = "."
 projectPath = Path(rf'{root_folder}')
 
