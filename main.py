@@ -16,7 +16,10 @@ from pathlib import Path
 import joblib
 from copy import deepcopy
 
-os.chdir(sys.path[0])
+##-##
+# os.chdir(sys.path[0])
+##-##
+
 root_folder = "."
 projectPath = Path(rf'{root_folder}')
 
@@ -59,7 +62,6 @@ from src.utils import (
 from fredapi import Fred
 import gspread
 from gspread_dataframe import set_with_dataframe
-
 
 
 
@@ -111,11 +113,17 @@ for data_type in data_map_dict:
 
     workbook = gspread_client.open_by_key(spreadsheet_id)
     worksheet = workbook.worksheet(data_ref)
-    worksheet.clear()
-    set_with_dataframe(
-        worksheet=worksheet, dataframe=data_df, include_index=False,
-        include_column_header=True, resize=True,
-    )
+    last_date = worksheet.col_values(1)[-1]
+    data_df_append = data_df[data_df[col_date] > datetime.strptime(last_date, "%Y-%m-%d").date()].copy()
+    data_df_append[col_date] = data_df_append[col_date].astype(str)
+    data_append_values = data_df_append.values.tolist()
+    workbook.values_append(data_ref, {'valueInputOption': 'USER_ENTERED'}, {'values': data_append_values})
+
+    # worksheet.clear()
+    # set_with_dataframe(
+    #     worksheet=worksheet, dataframe=data_df, include_index=False,
+    #     include_column_header=True, resize=True,
+    # )
 
     print(f"# {data_type}: Updated")
 

@@ -5,6 +5,3 @@
 # pip install pandas numpy requests matplotlib seaborn joblib tqdm scikit-learn scipy pyyaml
 # pip install fredapi
 
-
-
-https://docs.google.com/spreadsheets/d/15-Xw5H-JkiYeYhDtlnWl8EvSRry7yczWSsqvBCwuFlM/
