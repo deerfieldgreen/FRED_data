@@ -42,4 +42,38 @@ data_map_dict:
     rate_eur_lt_gov:
         data_ref: "IRLTLT01EZM156N"
         spreadsheet_id: "1UDsXTHGiIc8gHFfuZyyb2shSn7Nt5Je4HOYoWrLUQtY" 
+
+    cpi_usa:
+        data_ref: "USACPALTT01CTGYM"
+        spreadsheet_id: "1761aAh889w5uAjDTFcrZncqq82vH92876MHGwEk6ZQY"
+     
+    cpi_eur:
+        data_ref: "EA19CPALTT01GYM"
+        spreadsheet_id: "1wF2wFoOsw8n0uthGbVT9-TdPPLoxSgDpgvKnWcvtEYA"
+         
+    cpi_deu:
+        data_ref: "DEUCPALTT01CTGYM"
+        spreadsheet_id: "1GIB-hkZgaXwmmQXvl3RxqyRTtEswMS_8sIqkopf2wnU"     
         
+    cpi_gbr:
+        data_ref: "GBRCPALTT01CTGYM"
+        spreadsheet_id: "16DKfL5bn7QCTgmSVyzhpg-MZydWhqeJKS7mVx20ohOU"         
+        
+    cpi_chf:
+        data_ref: "CHECPALTT01CTGYM"
+        spreadsheet_id: "1ur_ExqXIPjRZKkbucaOshNQiaDnBioFJ2AY2P3jceo4"   
+            
+    cpi_jpn:
+        data_ref: "CPALTT01JPM659N"
+        spreadsheet_id: "1mx6h_2_JBBYboZA8L3YnOmVawkGlYzXsAWN_pA1CA5U"    
+    
+    cpi_can:
+        data_ref: "CANCPALTT01CTGYM"
+        spreadsheet_id: "1bH4gTUyUXWRuYAiWZ2jaompXsF3OsKtt0IIRAg8dz-Q"         
+        
+    cpi_aus:
+        data_ref: "CPALTT01AUQ659N"
+        spreadsheet_id: "1wHE12WuXYBq4dIUYanFBu_GAyeVQfgCITJ26dqb0P70"   
+            
+
+
