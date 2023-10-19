@@ -65,7 +65,6 @@
 */3 * * * * /root/miniconda3/envs/fred_env/bin/python3 /root/FRED_data/main.py
 30 * * * * /root/miniconda3/envs/fred_env/bin/python3 /root/FRED_data/main.py
 
-30 * * * * chmod +x /root/FRED_data/main.py && ./DAILY_UPDATE_batch_run.sh
 
 
 
