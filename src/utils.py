@@ -1,4 +1,5 @@
 
+import os
 import numpy as np
 import pandas as pd
 import yaml
@@ -22,7 +23,7 @@ def reduce_mem_usage(data_df, convert_to_cat=False, verbose=False, col_exclude=[
     for col in data_df.columns:
         if col in col_exclude:
             continue
-            
+
         col_type = data_df[col].dtype
 
         if col_type != object:
@@ -62,6 +63,11 @@ def last_day_of_month(date):
     return date.replace(month=date.month+1, day=1) - timedelta(days=1)
 
 
+def del_file(filename):
+    try:
+        os.remove(filename)
+    except OSError:
+        pass
 
 
 

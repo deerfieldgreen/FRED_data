@@ -6,74 +6,106 @@ data_map_dict:
     dff: 
         data_ref: "DFF"
         spreadsheet_id: "1K_NEb7HIIY0X5aCJ1kzrJh5Ieor-ACloU_V6VDotpzI"
+        data_source: "FRED"
 
     rate_aus_3m_bank:
         data_ref: "IR3TIB01AUM156N"
         spreadsheet_id: "1wPBUKNvqsDXJg7eUIruIUzG9h6zYsFInfuZSPhoR-oA"
-     
+        data_source: "FRED"
+        
     rate_cnd_3m_bank:
         data_ref: "IR3TIB01CAM156N"
         spreadsheet_id: "1k8pMhI4emmbjLPb3c7T42sAu-wXU6iDrPJ__vlXnBc8"
-
+        data_source: "FRED"
+        
     rate_chf_3m_bank:
         data_ref: "IR3TIB01CHM156N"
         spreadsheet_id: "1Kdgy6cifEZuoY0G8D8LVI8aC8z7YXsW6eoKXmHPghbI"
-
+        data_source: "FRED"
+        
     rate_deu_3m_bank:
         data_ref: "IR3TIB01DEM156N"
         spreadsheet_id: "1UeJsYbH8Cm_OgYFN9LyYtOQ5-bvHgoUBW8Zj7SlVnck"
-
+        data_source: "FRED"
+        
     rate_eur_3m_bank:
         data_ref: "IR3TIB01EZM156N"
         spreadsheet_id: "1ebQFazHrWvxhTI7c6XWZdVH8gVkvbxaTjaFMAy5AMtA"
+        data_source: "FRED"
         
     rate_gbp_3m_bank:
         data_ref: "IR3TIB01GBM156N"
         spreadsheet_id: "1K-e6vLtKcmU3L2-cVQq9vIaezu1lFDENJCX5EL02cWs"
-
+        data_source: "FRED"
+        
     rate_jpn_3m_bank:
         data_ref: "IR3TIB01JPM156N"
         spreadsheet_id: "1TD7XYeuj_BaNcgJEOvFU1uKfSMYehlLDMRYXKWWHBss"
-
+        data_source: "FRED"
+        
     rate_deu_lt_gov:
         data_ref: "IRLTLT01DEM156N"
         spreadsheet_id: "14sOQ0PBeW4ldMrkEOef9eMqE0BJ6nssPXkP2NCeVz8I"
-
+        data_source: "FRED"
+        
     rate_eur_lt_gov:
         data_ref: "IRLTLT01EZM156N"
         spreadsheet_id: "1UDsXTHGiIc8gHFfuZyyb2shSn7Nt5Je4HOYoWrLUQtY" 
-
+        data_source: "FRED"
+        
     cpi_usa:
         data_ref: "USACPALTT01CTGYM"
         spreadsheet_id: "1761aAh889w5uAjDTFcrZncqq82vH92876MHGwEk6ZQY"
-     
+        data_source: "FRED"
+        
     cpi_eur:
         data_ref: "EA19CPALTT01GYM"
         spreadsheet_id: "1wF2wFoOsw8n0uthGbVT9-TdPPLoxSgDpgvKnWcvtEYA"
-         
+        data_source: "FRED"
+        
     cpi_deu:
         data_ref: "DEUCPALTT01CTGYM"
         spreadsheet_id: "1GIB-hkZgaXwmmQXvl3RxqyRTtEswMS_8sIqkopf2wnU"     
+        data_source: "FRED"
         
     cpi_gbr:
         data_ref: "GBRCPALTT01CTGYM"
         spreadsheet_id: "16DKfL5bn7QCTgmSVyzhpg-MZydWhqeJKS7mVx20ohOU"         
+        data_source: "FRED"
         
     cpi_chf:
         data_ref: "CHECPALTT01CTGYM"
         spreadsheet_id: "1ur_ExqXIPjRZKkbucaOshNQiaDnBioFJ2AY2P3jceo4"   
-            
+        data_source: "FRED"
+        
     cpi_jpn:
         data_ref: "CPALTT01JPM659N"
         spreadsheet_id: "1mx6h_2_JBBYboZA8L3YnOmVawkGlYzXsAWN_pA1CA5U"    
-    
+        data_source: "FRED"
+        
     cpi_can:
         data_ref: "CANCPALTT01CTGYM"
         spreadsheet_id: "1bH4gTUyUXWRuYAiWZ2jaompXsF3OsKtt0IIRAg8dz-Q"         
+        data_source: "FRED"
         
     cpi_aus:
         data_ref: "CPALTT01AUQ659N"
         spreadsheet_id: "1wHE12WuXYBq4dIUYanFBu_GAyeVQfgCITJ26dqb0P70"   
-            
+        data_source: "FRED"
+
+    oil_global:
+        data_ref: "SPGLOBALOIL"
+        spreadsheet_id: "1BM69XEdWZ4-QlS4epzSnIDRFSxlzUTEF7af4CsrAY8Y"   
+        data_source: "SPGLOBAL"
+        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
+
+    oil_gas_ep:
+        data_ref: "SPOILGASEP"
+        spreadsheet_id: "1wZIIH8M0C9KaHjKl4HP5R14j6VOAl0yANIhzUhtk4XY"   
+        data_source: "SPGLOBAL"
+        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351"
+
+
+
 
 

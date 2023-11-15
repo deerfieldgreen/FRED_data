@@ -35,6 +35,11 @@
 	pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib oauth2client
 	pip install gspread gsheets gspread-dataframe
 
+	##-##
+	pip install xlrd
+	##-##
+
+
 	
 * Git setup:		
 	git clone https://github.com/deerfieldgreen/FRED_data.git

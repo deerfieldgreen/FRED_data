@@ -57,12 +57,13 @@ def load_obj(name):
 
 from src.utils import (
     load_config,
+    del_file,
 )
 
 from fredapi import Fred
 import gspread
 from gspread_dataframe import set_with_dataframe
-
+from urllib.request import urlretrieve
 
 
 
@@ -84,8 +85,10 @@ col_date = config["col_date"]
 
 
 for data_type in data_map_dict:
+
     data_ref = data_map_dict[data_type]["data_ref"]
     spreadsheet_id = data_map_dict[data_type]["spreadsheet_id"]
+    data_source = data_map_dict[data_type]["data_source"]
 
     data_df_init = pd.read_csv(dataPath / data_type / "data.csv")
     data_df_init[col_date] = pd.to_datetime(data_df_init[col_date])
@@ -94,20 +97,38 @@ for data_type in data_map_dict:
         print(f"# {data_type}: data column not found !!")
         continue
 
-    data_df_new = fred.get_series(data_ref)
-    data_df_new = data_df_new.dropna()
-    data_df_new = data_df_new.reset_index()
-    # data_df_new.columns = data_df_init.columns
-    data_df_new.columns = [col_date, data_ref]
+    if data_source == "FRED":
+        data_df_new = fred.get_series(data_ref)
+        data_df_new = data_df_new.dropna()
+        data_df_new = data_df_new.reset_index()
+        data_df_new.columns = [col_date, data_ref]
+
+    if data_source == "SPGLOBAL":
+        url = data_map_dict[data_type]["url"]
+        filename = "TEMP_data.xls"
+        del_file(dataPath / filename)
+        urlretrieve(url, dataPath / filename)
+
+        data_df_new = pd.read_excel(dataPath / filename)
+        data_df_new.columns = [col_date, data_ref]
+        data_df_new = data_df_new.dropna()
+        data_df_new.reset_index(drop=True, inplace=True)
+        data_df_new = data_df_new.iloc[3:]
+        data_df_new.reset_index(drop=True, inplace=True)
+        data_df_new[col_date] = pd.to_datetime(data_df_new[col_date])
+        data_df_new[data_ref] = data_df_new[data_ref].astype(float)
+
+        del_file(dataPath / filename)
+
 
     data_df = pd.concat([data_df_init, data_df_new])
     data_df.reset_index(drop=True, inplace=True)
 
     data_df.drop_duplicates(col_date, keep='first', inplace=True)
     data_df.reset_index(drop=True, inplace=True)
-
     data_df.sort_values(col_date, ascending=True, inplace=True)
     data_df.reset_index(drop=True, inplace=True)
+
     data_df[col_date] = data_df[col_date].dt.date
     data_df.to_csv(dataPath / data_type / "data.csv", index=False)
 
