@@ -2,7 +2,7 @@
 
 import numpy as np
 import pandas as pd
-import os, sys, re, ast, csv, math, gc, random, enum, argparse, json, requests, time  
+import os, sys, re, ast, csv, math, gc, random, enum, argparse, json, requests, time
 from datetime import datetime, timedelta
 import matplotlib.pyplot as plt 
 import seaborn as sns
@@ -63,7 +63,10 @@ from src.utils import (
 from fredapi import Fred
 import gspread
 from gspread_dataframe import set_with_dataframe
-from urllib.request import urlretrieve
+from urllib.request import urlretrieve, Request, urlopen
+
+
+
 
 
 
@@ -82,7 +85,6 @@ col_date = config["col_date"]
 
 ##############################################################################
 ## Main
-
 
 for data_type in data_map_dict:
 
@@ -107,7 +109,12 @@ for data_type in data_map_dict:
         url = data_map_dict[data_type]["url"]
         filename = "TEMP_data.xls"
         del_file(dataPath / filename)
-        urlretrieve(url, dataPath / filename)
+
+        # urlretrieve(url, dataPath / filename)
+        headers = {'user-agent': 'Mozilla/5.0'}
+        r = requests.get(url, headers=headers)
+        with open(dataPath / filename, 'wb') as f:
+            f.write(r.content)
 
         data_df_new = pd.read_excel(dataPath / filename)
         data_df_new.columns = [col_date, data_ref]
@@ -117,7 +124,6 @@ for data_type in data_map_dict:
         data_df_new.reset_index(drop=True, inplace=True)
         data_df_new[col_date] = pd.to_datetime(data_df_new[col_date])
         data_df_new[data_ref] = data_df_new[data_ref].astype(float)
-
         del_file(dataPath / filename)
 
 
