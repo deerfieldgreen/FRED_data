@@ -97,15 +97,13 @@ data_map_dict:
         data_ref: "SPGLOBALOIL"
         spreadsheet_id: "1BM69XEdWZ4-QlS4epzSnIDRFSxlzUTEF7af4CsrAY8Y"   
         data_source: "SPGLOBAL"
-        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
+        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
+nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
 
     oil_gas_ep:
         data_ref: "SPOILGASEP"
         spreadsheet_id: "1wZIIH8M0C9KaHjKl4HP5R14j6VOAl0yANIhzUhtk4XY"   
         data_source: "SPGLOBAL"
-        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351"
-
-
-
-
+        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
+nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351"
 

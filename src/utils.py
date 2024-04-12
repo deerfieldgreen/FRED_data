@@ -68,14 +68,3 @@ def del_file(filename):
         os.remove(filename)
     except OSError:
         pass
-
-
-
-
-
-
-
-
-
-
-
