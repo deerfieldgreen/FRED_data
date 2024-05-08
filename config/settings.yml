@@ -7,7 +7,17 @@ data_map_dict:
         data_ref: "DFF"
         spreadsheet_id: "1K_NEb7HIIY0X5aCJ1kzrJh5Ieor-ACloU_V6VDotpzI"
         data_source: "FRED"
-
+        
+    frb_kc_lmci_monthly:
+        data_ref: "FRBKCLMCILA"
+        spreadsheet_id: "1EjQWN_aM-F8ht6cik6iQGLkxhNI7mYYRMZ8wr1y41sY"
+        data_source: "FRED"
+        
+    michigan_csi_monthly:
+        data_ref: "UMCSENT"
+        spreadsheet_id: "1XuHtRbEZhDc6oihMAHIWXo0ckirG86Ssb2YJALGHdzA"
+        data_source: "FRED"
+        
     rate_aus_3m_bank:
         data_ref: "IR3TIB01AUM156N"
         spreadsheet_id: "1wPBUKNvqsDXJg7eUIruIUzG9h6zYsFInfuZSPhoR-oA"
