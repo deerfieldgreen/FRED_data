@@ -13,11 +13,13 @@ pd.set_option('display.float_format', '{:0.3f}'.format)
 pd.set_option('display.max_row', 50)
 plt.style.use('ggplot')
 from pathlib import Path
+from github import Github, GithubException
 import joblib
 from copy import deepcopy
+from src.utils import read_and_encode_file
 
 ##-##
-os.chdir(sys.path[0])
+# os.chdir(sys.path[0])
 ##-##
 
 root_folder = "."
@@ -32,25 +34,6 @@ dataPath.mkdir(parents=True, exist_ok=True)
 pickleDataPath.mkdir(parents=True, exist_ok=True)
 configPath.mkdir(parents=True, exist_ok=True)
 
-import pickle
-def save_obj(obj, name):
-    with open(pickleDataPath / f'{name}.pkl', 'wb') as f:
-        pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
-
-def load_obj(name):
-    with open(pickleDataPath / f'{name}.pkl', 'rb') as f:
-        return pickle.load(f)
-
-
-
-##############################################################################
-## Info
-
-# Need to enable GCP Google Sheets API and Google Drive API, see:
-# https://www.analyticsvidhya.com/blog/2020/07/read-and-update-google-spreadsheets-with-python/
-
-
-
 
 ##############################################################################
 ## Imports
@@ -61,27 +44,25 @@ from src.utils import (
 )
 
 from fredapi import Fred
-import gspread
-from gspread_dataframe import set_with_dataframe
-from urllib.request import urlretrieve, Request, urlopen
-
-
-
-
-
+import dotenv
+dotenv.load_dotenv(".env")
 
 ##############################################################################
 ## Settings
 
 config = load_config(path=configPath / "settings.yml")
-fred_api_key = config["fred_api_key"]
+fred_api_key = os.environ.get("FRED_API_KEY")
 fred = Fred(api_key=fred_api_key)
-gspread_client = gspread.service_account(credsPath / 'gsheet' / "creds.json")
 
 data_map_dict = config["data_map_dict"]
 col_date = config["col_date"]
 
-
+###########################################################################
+token = os.environ.get("GIT_TOKEN")
+g = Github(token)
+repo = g.get_repo(
+    "deerfieldgreen/FRED_data"
+)  # Replace with your repo details
 
 ##############################################################################
 ## Main
@@ -92,12 +73,16 @@ for data_type in data_map_dict:
     spreadsheet_id = data_map_dict[data_type]["spreadsheet_id"]
     data_source = data_map_dict[data_type]["data_source"]
 
-    data_df_init = pd.read_csv(dataPath / data_type / "data.csv")
+    csv_file = dataPath / data_type / "data.csv"
+    if not os.path.exists(csv_file):
+        data_df_init = pd.DataFrame(columns=[col_date, data_ref])
+    else:
+        data_df_init = pd.read_csv(dataPath / data_type / "data.csv")
     data_df_init[col_date] = pd.to_datetime(data_df_init[col_date])
 
-    if data_ref not in data_df_init.columns:
-        print(f"# {data_type}: data column not found !!")
-        continue
+    # if data_ref not in data_df_init.columns:
+    #     print(f"# {data_type}: data column not found !!")
+    #     continue
 
     if data_source == "FRED":
         data_df_new = fred.get_series(data_ref)
@@ -112,11 +97,18 @@ for data_type in data_map_dict:
 
         # urlretrieve(url, dataPath / filename)
         headers = {'user-agent': 'Mozilla/5.0'}
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Referer': 'http://www.spglobal.com/',
+            'Accept-Encoding': 'gzip, deflate',
+            'Connection': 'keep-alive'
+        }
         r = requests.get(url, headers=headers)
         with open(dataPath / filename, 'wb') as f:
             f.write(r.content)
 
-        data_df_new = pd.read_excel(dataPath / filename)
+        data_df_new = pd.read_excel(dataPath / filename, engine='openpyxl')
         data_df_new.columns = [col_date, data_ref]
         data_df_new = data_df_new.dropna()
         data_df_new.reset_index(drop=True, inplace=True)
@@ -136,23 +128,33 @@ for data_type in data_map_dict:
     data_df.reset_index(drop=True, inplace=True)
 
     data_df[col_date] = data_df[col_date].dt.date
+
     data_df.to_csv(dataPath / data_type / "data.csv", index=False)
 
-    workbook = gspread_client.open_by_key(spreadsheet_id)
-    worksheet = workbook.worksheet(data_ref)
-    last_date = worksheet.col_values(1)[-1]
-    data_df_append = data_df[data_df[col_date] > datetime.strptime(last_date, "%Y-%m-%d").date()].copy()
-    data_df_append[col_date] = data_df_append[col_date].astype(str)
-    data_append_values = data_df_append.values.tolist()
-    workbook.values_append(data_ref, {'valueInputOption': 'USER_ENTERED'}, {'values': data_append_values})
+    if os.environ.get("PUSH_TO_GITHUB"):
+        content = read_and_encode_file(dataPath / data_type / "data.csv")
+        try:
+            git_file = repo.get_contents(f"data/{data_type}/data.csv")
+            repo.update_file(
+                git_file.path,
+                f"Updated file for {datetime.today().date()}",
+                content,
+                git_file.sha,
+            )
+        except Exception as e:
+            if isinstance(e, GithubException) and e.status == 404:  # File not found
+                repo.create_file(
+                    f"data/{data_type}/data.csv",
+                    f"Created file for {datetime.today().date()}",
+                    content,
+                )
+            else:
+                raise e
 
-    # worksheet.clear()
-    # set_with_dataframe(
-    #     worksheet=worksheet, dataframe=data_df, include_index=False,
-    #     include_column_header=True, resize=True,
-    # )
+        print(f"# {data_type}: Pushed to Github")
 
     print(f"# {data_type}: Updated")
+
     time.sleep(5)
 
 

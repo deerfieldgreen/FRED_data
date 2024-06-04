@@ -1,5 +1,4 @@
 
-fred_api_key: ""
 col_date: "DATE"
 
 data_map_dict:
@@ -164,29 +163,29 @@ data_map_dict:
         # https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6CA8s0Jf8FM1VE1gYmJi-Flv4D4cNGvrxQ_w-kUFr-9T2vaLJu-8gOo3kPEcyN8-mNEfWgcqAvwSH/pub?gid=88209986&single=true&output=csv
 
 
-
-    oil_global:
-        data_ref: "SPGLOBALOIL"
-        spreadsheet_id: "1dWt2AUr-0Gu5MSR66AVDfJnm1BRkYB1cWfO7HJcz1B0"   
-        data_source: "SPGLOBAL"
-        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
-nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
-
-
-        # URL Reference 
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vSv_ub6WYXeX40Q_1J0ErB5kgAmmbRxJ9WYBUCcvyGygbm74hbEmBl5hFVXiBADklgv0BGV5-IaM9d2/pub?gid=147257013&single=true&output=csv
-
-
-
-    oil_gas_ep:
-        data_ref: "SPOILGASEP"
-        spreadsheet_id: "1pl_rp4U570VhMkHJK-LyFxEDBvt131esIz3gYGmw3WU"   
-        data_source: "SPGLOBAL"
-        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
-nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351"
-
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQo-BwkdYP1pqdZT_Ubfh6tjEJfKYQj5aJ1PDkH40hgEKcMN54kUakpi2omOCxAasn3jwCuF90yVJde/pub?gid=1568399517&single=true&output=csv
+# SPGLOBAL downloads are not working due to security restrictions on their downloads
+#    oil_global:
+#        data_ref: "SPGLOBALOIL"
+#        spreadsheet_id: "1dWt2AUr-0Gu5MSR66AVDfJnm1BRkYB1cWfO7HJcz1B0"
+#        data_source: "SPGLOBAL"
+#        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
+#nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
+#
+#
+#        # URL Reference
+#        # https://docs.google.com/spreadsheets/d/e/2PACX-1vSv_ub6WYXeX40Q_1J0ErB5kgAmmbRxJ9WYBUCcvyGygbm74hbEmBl5hFVXiBADklgv0BGV5-IaM9d2/pub?gid=147257013&single=true&output=csv
+#
+#
+#
+#    oil_gas_ep:
+#        data_ref: "SPOILGASEP"
+#        spreadsheet_id: "1pl_rp4U570VhMkHJK-LyFxEDBvt131esIz3gYGmw3WU"
+#        data_source: "SPGLOBAL"
+#        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
+#nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351"
+#
+#        # URL Reference
+#        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQo-BwkdYP1pqdZT_Ubfh6tjEJfKYQj5aJ1PDkH40hgEKcMN54kUakpi2omOCxAasn3jwCuF90yVJde/pub?gid=1568399517&single=true&output=csv
 
 
         

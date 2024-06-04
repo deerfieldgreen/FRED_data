@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import yaml
 from datetime import datetime, timedelta
+import base64
 
 
 def load_config(path):
@@ -68,3 +69,9 @@ def del_file(filename):
         os.remove(filename)
     except OSError:
         pass
+
+def read_and_encode_file(file_path):
+    """Read the file content and encode it in base64."""
+    with open(file_path, 'rb') as file:
+        content = file.read()
+    return base64.b64encode(content).decode('utf-8')
