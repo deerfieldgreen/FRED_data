@@ -70,8 +70,11 @@ def del_file(filename):
     except OSError:
         pass
 
-def read_and_encode_file(file_path):
+def read_and_encode_file(file_path, encode=True):
     """Read the file content and encode it in base64."""
     with open(file_path, 'rb') as file:
         content = file.read()
-    return base64.b64encode(content).decode('utf-8')
+    if encode:
+        return base64.b64encode(content).decode('utf-8')
+    else:
+        return content

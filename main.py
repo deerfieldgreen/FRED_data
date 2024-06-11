@@ -132,7 +132,7 @@ for data_type in data_map_dict:
     data_df.to_csv(dataPath / data_type / "data.csv", index=False)
 
     if os.environ.get("PUSH_TO_GITHUB"):
-        content = read_and_encode_file(dataPath / data_type / "data.csv")
+        content = read_and_encode_file(dataPath / data_type / "data.csv", encode=False)
         try:
             git_file = repo.get_contents(f"data/{data_type}/data.csv")
             repo.update_file(
