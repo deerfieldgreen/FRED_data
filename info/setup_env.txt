@@ -5,3 +5,6 @@
 # pip install pandas numpy requests matplotlib seaborn joblib tqdm scikit-learn scipy pyyaml
 # pip install fredapi
 
+# Docker
+docker build -t gcr.io/dfg-analytics-insights-prod/daily-levels-painting .
+docker push gcr.io/dfg-analytics-insights-prod/fred-data
