@@ -170,8 +170,10 @@ data_map_dict:
 #        data_source: "SPGLOBAL"
 #        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
 #nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
-#
-#
+#   
+
+#   kevinostoll - 2024.06.12
+#   https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707
 #        # URL Reference
 #        # https://docs.google.com/spreadsheets/d/e/2PACX-1vSv_ub6WYXeX40Q_1J0ErB5kgAmmbRxJ9WYBUCcvyGygbm74hbEmBl5hFVXiBADklgv0BGV5-IaM9d2/pub?gid=147257013&single=true&output=csv
 #
