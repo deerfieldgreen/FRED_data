@@ -170,6 +170,11 @@ data_map_dict:
 #        data_source: "SPGLOBAL"
 #        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
 #nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
+#   
+
+#   kevinostoll - 2024.06.12
+#   https://www.spglobal.com/spdji/en/indices/equity/sp-global-oil-index/#overview
+#   https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707
 #
 #
 #        # URL Reference
@@ -186,6 +191,16 @@ data_map_dict:
 #
 #        # URL Reference
 #        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQo-BwkdYP1pqdZT_Ubfh6tjEJfKYQj5aJ1PDkH40hgEKcMN54kUakpi2omOCxAasn3jwCuF90yVJde/pub?gid=1568399517&single=true&output=csv
+#  
+#   kevinostoll - 2024.06.12
+#   https://www.spglobal.com/spdji/en/indices/equity/sp-oil-gas-exploration-production-select-industry-index/#overview
+#   https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351
+
+
+
+
+
+
 
 
         
