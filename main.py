@@ -17,6 +17,8 @@ from github import Github, GithubException
 import joblib
 from copy import deepcopy
 from src.utils import read_and_encode_file
+from huggingface_hub import HfApi, HfFolder
+from datasets import Dataset
 
 ##-##
 # os.chdir(sys.path[0])
@@ -63,6 +65,11 @@ g = Github(token)
 repo = g.get_repo(
     "deerfieldgreen/FRED_data"
 )  # Replace with your repo details
+
+hf_token = os.environ.get("HF_API_KEY")
+hf_api = HfApi()
+hf_user = "deerfieldgreen"  # Replace with your Hugging Face repo details
+
 
 ##############################################################################
 ## Main
@@ -118,7 +125,6 @@ for data_type in data_map_dict:
         data_df_new[data_ref] = data_df_new[data_ref].astype(float)
         del_file(dataPath / filename)
 
-
     data_df = pd.concat([data_df_init, data_df_new])
     data_df.reset_index(drop=True, inplace=True)
 
@@ -152,6 +158,14 @@ for data_type in data_map_dict:
                 raise e
 
         print(f"# {data_type}: Pushed to Github")
+
+    # Push to HuggingFace
+    if os.environ.get("PUSH_TO_HF"):
+        hf_repo_id = f'{hf_user}/{data_type.lower()}'
+        hf_dataset = Dataset.from_pandas(data_df)
+        hf_dataset.push_to_hub(repo_id=hf_repo_id)
+        print(f"# {data_type}: Pushed to Hugging Face")
+
 
     print(f"# {data_type}: Updated")
 
