@@ -1,14 +1,13 @@
-
-
 import numpy as np
 import pandas as pd
 import os, sys, re, ast, csv, math, gc, random, enum, argparse, json, requests, time
 from datetime import datetime, timedelta
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
+
 warnings.filterwarnings('ignore')
-pd.set_option('display.max_columns', None) # to ensure console display all columns
+pd.set_option('display.max_columns', None)  # to ensure console display all columns
 pd.set_option('display.float_format', '{:0.3f}'.format)
 pd.set_option('display.max_row', 50)
 plt.style.use('ggplot')
@@ -36,7 +35,6 @@ dataPath.mkdir(parents=True, exist_ok=True)
 pickleDataPath.mkdir(parents=True, exist_ok=True)
 configPath.mkdir(parents=True, exist_ok=True)
 
-
 ##############################################################################
 ## Imports
 
@@ -47,7 +45,11 @@ from src.utils import (
 
 from fredapi import Fred
 import dotenv
+
 dotenv.load_dotenv(".env")
+
+PUSH_TO_GITHUB = False if os.environ.get("PUSH_TO_GITHUB") == 'False' else True
+PUSH_TO_HF = False if os.environ.get("PUSH_TO_HF") == 'False' else True
 
 ##############################################################################
 ## Settings
@@ -69,7 +71,6 @@ repo = g.get_repo(
 hf_token = os.environ.get("HF_API_KEY")
 hf_api = HfApi()
 hf_user = "deerfieldgreen"  # Replace with your Hugging Face repo details
-
 
 ##############################################################################
 ## Main
@@ -137,7 +138,7 @@ for data_type in data_map_dict:
 
     data_df.to_csv(dataPath / data_type / "data.csv", index=False)
 
-    if os.environ.get("PUSH_TO_GITHUB"):
+    if PUSH_TO_GITHUB:
         content = read_and_encode_file(dataPath / data_type / "data.csv", encode=False)
         try:
             git_file = repo.get_contents(f"data/{data_type}/data.csv")
@@ -160,20 +161,12 @@ for data_type in data_map_dict:
         print(f"# {data_type}: Pushed to Github")
 
     # Push to HuggingFace
-    if os.environ.get("PUSH_TO_HF"):
+    if PUSH_TO_HF:
         hf_repo_id = f'{hf_user}/{data_type.lower()}'
         hf_dataset = Dataset.from_pandas(data_df)
         hf_dataset.push_to_hub(repo_id=hf_repo_id)
         print(f"# {data_type}: Pushed to Hugging Face")
 
-
     print(f"# {data_type}: Updated")
 
     time.sleep(5)
-
-
-
-
-
-
-
