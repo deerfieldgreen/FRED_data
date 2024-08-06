@@ -6,5 +6,6 @@
 # pip install fredapi
 
 # Docker
+- **IMPORTANT**: make sure to update requirements.txt file before pushing to docker
 docker build -t gcr.io/dfg-analytics-insights-prod/fred-data .
 docker push gcr.io/dfg-analytics-insights-prod/fred-data

@@ -69,7 +69,8 @@ repo = g.get_repo(
 )  # Replace with your repo details
 
 hf_token = os.environ.get("HF_API_KEY")
-hf_api = HfApi()
+hf_api = HfApi(token=hf_token)
+print(hf_api.whoami())
 hf_user = "deerfieldgreen"  # Replace with your Hugging Face repo details
 
 ##############################################################################
