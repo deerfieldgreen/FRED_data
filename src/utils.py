@@ -5,6 +5,8 @@ import pandas as pd
 import yaml
 from datetime import datetime, timedelta
 import base64
+from google.cloud import storage
+from google.auth import default
 
 
 def load_config(path):
@@ -78,3 +80,20 @@ def read_and_encode_file(file_path, encode=True):
         return base64.b64encode(content).decode('utf-8')
     else:
         return content
+
+def get_gcp_bucket():
+    # for local usage
+    # service_account_key_path = projectPath / 'dfg-analytics-insights-prod-0a3460e5b674.json'
+    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = str(service_account_key_path)
+    # storage_client = storage.Client()
+
+    # for GCP usage
+    # Initialize a storage client
+    credentials, project_id = default()
+    storage_client = storage.Client(credentials=credentials, project=project_id)
+
+    # Name of your GCP bucket
+    bucket_name = 'fred-stlouis'
+    bucket = storage_client.bucket(bucket_name)
+    return bucket
+

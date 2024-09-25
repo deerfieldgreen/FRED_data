@@ -1,3 +1,5 @@
+from io import StringIO
+
 import numpy as np
 import pandas as pd
 import os, sys, re, ast, csv, math, gc, random, enum, argparse, json, requests, time
@@ -15,7 +17,7 @@ from pathlib import Path
 from github import Github, GithubException
 import joblib
 from copy import deepcopy
-from src.utils import read_and_encode_file
+from src.utils import read_and_encode_file, get_gcp_bucket
 from huggingface_hub import HfApi, HfFolder
 from datasets import Dataset
 
@@ -50,6 +52,7 @@ dotenv.load_dotenv(".env")
 
 PUSH_TO_GITHUB = False if os.environ.get("PUSH_TO_GITHUB") == 'False' else True
 PUSH_TO_HF = False if os.environ.get("PUSH_TO_HF") == 'False' else True
+PUSH_TO_GCP = False if os.environ.get("PUSH_TO_GCP") == 'False' else True
 
 ##############################################################################
 ## Settings
@@ -57,6 +60,8 @@ PUSH_TO_HF = False if os.environ.get("PUSH_TO_HF") == 'False' else True
 config = load_config(path=configPath / "settings.yml")
 fred_api_key = os.environ.get("FRED_API_KEY")
 fred = Fred(api_key=fred_api_key)
+
+bucket = get_gcp_bucket()
 
 data_map_dict = config["data_map_dict"]
 col_date = config["col_date"]
@@ -77,6 +82,9 @@ hf_user = "deerfieldgreen"  # Replace with your Hugging Face repo details
 ## Main
 
 for data_type in data_map_dict:
+
+    # if data_type != 'total_public_debt':
+    #     continue
 
     data_ref = data_map_dict[data_type]["data_ref"]
     spreadsheet_id = data_map_dict[data_type]["spreadsheet_id"]
@@ -105,7 +113,7 @@ for data_type in data_map_dict:
         del_file(dataPath / filename)
 
         # urlretrieve(url, dataPath / filename)
-        headers = {'user-agent': 'Mozilla/5.0'}
+        # headers = {'user-agent': 'Mozilla/5.0'}
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -165,8 +173,19 @@ for data_type in data_map_dict:
     if PUSH_TO_HF:
         hf_repo_id = f'{hf_user}/{data_type.lower()}'
         hf_dataset = Dataset.from_pandas(data_df)
-        hf_dataset.push_to_hub(repo_id=hf_repo_id)
+        hf_dataset.push_to_hub(repo_id=hf_repo_id, token=hf_token)
         print(f"# {data_type}: Pushed to Hugging Face")
+
+    if PUSH_TO_GCP:
+        csv_buffer = StringIO()
+        data_df.to_csv(csv_buffer, index=False)
+
+        # Name of the blob (file) in the bucket
+        blob_name = f'{data_type.lower()}.csv'
+        blob = bucket.blob(blob_name)
+
+        # Upload CSV directly from the memory buffer
+        blob.upload_from_string(csv_buffer.getvalue(), content_type='text/csv')
 
     print(f"# {data_type}: Updated")
 

@@ -162,6 +162,21 @@ data_map_dict:
         # URL Reference
         # https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6CA8s0Jf8FM1VE1gYmJi-Flv4D4cNGvrxQ_w-kUFr-9T2vaLJu-8gOo3kPEcyN8-mNEfWgcqAvwSH/pub?gid=88209986&single=true&output=csv
 
+    total_public_debt:
+        data_ref: "GFDEBTN"
+        spreadsheet_id: "12345"
+        data_source: "FRED"
+
+    tpd_perc_gdp:
+        data_ref: "GFDEGDQ188S"
+        spreadsheet_id: "12345"
+        data_source: "FRED"
+
+    gdp:
+        data_ref: "GDP"
+        spreadsheet_id: "12345"
+        data_source: "FRED"
+
 
 # SPGLOBAL downloads are not working due to security restrictions on their downloads
 #    oil_global:
