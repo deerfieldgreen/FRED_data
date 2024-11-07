@@ -7,201 +7,113 @@ data_map_dict:
         spreadsheet_id: "1K_NEb7HIIY0X5aCJ1kzrJh5Ieor-ACloU_V6VDotpzI"
         data_source: "FRED"
 
-        # URL reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vTafwZSvFMsrUbv_4Vl4wtsZb0ixk2_38StIlrTMMToa656En1-7n9Uaxy5NG3Z7ekmro3JrTzgwf1Q/pub?gid=1400614786&single=true&output=csv
-
-        
+     
     frb_kc_lmci_monthly:
         data_ref: "FRBKCLMCILA"
         spreadsheet_id: "1EjQWN_aM-F8ht6cik6iQGLkxhNI7mYYRMZ8wr1y41sY"
         data_source: "FRED"
-
-        #URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vR6q-YNOU6pyIL1CvHFTobIWRI1C0z7uyLPm9BAq3FGbKccVwv9U1ZkUMJj5QDANpy8-OlT5GqVY6iH/pub?gid=0&single=true&output=csv
-        
+    
     michigan_csi_monthly:
         data_ref: "UMCSENT"
         spreadsheet_id: "1XuHtRbEZhDc6oihMAHIWXo0ckirG86Ssb2YJALGHdzA"
         data_source: "FRED"
-        #URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQFVRHctCjE6co8xKCKeCdds6ufKGZAIN0h_r9YNbOEQqJRNrE8rzA0UT_wE5EXv4OZpovMTpS-kRNE/pub?gid=0&single=true&output=csv
-
 
         
     rate_aus_3m_bank:
         data_ref: "IR3TIB01AUM156N"
         spreadsheet_id: "1HTxj7k8xHOVpEV-gDF09gdAO1Su-7pUDRn6qvq4c2Yo"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vT9spdp1op1dbMNrXNeduK5kDzyWCPiZbGHjYwfv5LRv3vH0Sn7vYwjcYewMdoHNU4KkdgCx0Bb5qRW/pub?gid=1639615970&single=true&output=csv
 
         
     rate_cnd_3m_bank:
         data_ref: "IR3TIB01CAM156N"
         spreadsheet_id: "1j16guRhZDdkyqnvBG6Jk40h6CX4_T-5PJU65i3hq6Ys"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vS5HGqrEtf6B-wT3p62lM7wt4_-LaQ722MMHPtsluqZAduHCz69PBctV4I4iAsuvLi9MmaQNUl3bOoA/pub?gid=483123093&single=true&output=csv
-
+        
 
     rate_chf_3m_bank:
         data_ref: "IR3TIB01CHM156N"
         spreadsheet_id: "1fw4QjxC8DcDrhJqiy1n_Eu4fI4gFq2ju9blIJ5l0Rug"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQmQr5noMezc9e8E9TcqqzWOzNA2s43DQbxqXwHZS1Zr02LhYSXa9AGypyfipiXIm7rxfpNThl1f_tm/pub?gid=1734297228&single=true&output=csv
-
+        
     rate_deu_3m_bank:
         data_ref: "IR3TIB01DEM156N"
         spreadsheet_id: "1BO0SyU2O4zG2xXyGXPO72GVs9oZoYllHsNzzxxUPCyY"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQk0C1_ztMnyLmcvWcZoXq3cg9To-gAfShYwPgM4EdVkfxuG5qNlZZ4ndAOQ0a7pbODkF9-woZ_uu8Z/pub?gid=1568788544&single=true&output=csv
         
     rate_eur_3m_bank:
         data_ref: "IR3TIB01EZM156N"
         spreadsheet_id: "1nWRxnxpU3xwwYYDeBHnWJCpIPb_JW2GW0jhIiPGmf94"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQX63fORX2_lTe1wdJdMRaYYHV9jm_B-C1bmmD4nddIC8PJZnVHE1F0Ij7dxyG4VJwTGv-AutK0dLw1/pub?gid=2059310805&single=true&output=csv
-
+        
         
     rate_gbp_3m_bank:
         data_ref: "IR3TIB01GBM156N"
         spreadsheet_id: "1fMTlBJDjJ6tf5jWs97lavu3LSNQxlomRNdm7BSaY1oY"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vSJ9QL9v7fOLsTcLiPrBD7kMSQ9qMEBIv24DCZj4XwHwOMilsV9SArjDBhKFwnpcDt0FX8Az-9dBmqc/pub?gid=1120780951&single=true&output=csv
         
     rate_jpn_3m_bank:
         data_ref: "IR3TIB01JPM156N"
         spreadsheet_id: "18Dd_7Ht4vhz8LBSoUWVFE55vZDxORwZUqqd487XaI9U"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vSzqwPmBTtS8b4pcz7LBudxxEEKqiCare_eX53S8IliA3_JK7FG5URx6UIbuCaLBXpLeXyvilr8C56L/pub?gid=1682849610&single=true&output=csv
-
+        
         
     rate_deu_lt_gov:
         data_ref: "IRLTLT01DEM156N"
         spreadsheet_id: "1n_SSgIRFwc6yK5V0ah9lA7w8coCVDCqzxqO93jWBtqQ"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vTdach4pK4KJ-T1bwGSv4S_wDszuhhsmlxQzyBbl_XfrZEBDcc35R1fuWTw8cvznt4nzM_dkQz8KM9T/pub?gid=2099864712&single=true&output=csv
-
+        
 
         
     rate_eur_lt_gov:
         data_ref: "IRLTLT01EZM156N"
         spreadsheet_id: "1MLF8OFArGpDu6Ft7xqqfKFww-vJvtSHSHCN0b93xK4c" 
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vRs48WNfiIRQUvyWQdibl3Lakz7hDfu0jx97LlG3mJ_9jQo1fV-YxZOIipktdBOLhk-MQWci8NfitgK/pub?gid=1026565438&single=true&output=csv
-
+        
 
     cpi_usa:
         data_ref: "USACPALTT01CTGYM"
         spreadsheet_id: "1NCzj9EEAQ13QxcEDmqFeA99g8XzxrWLUCluM7yUyqr4"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vTYRPUuUrjTJwzWtclmH1LhZggkcH2484kgnFG3-MYAgcDLL2p847Uo9BkBv4VvSaKujn79flAHCKVS/pub?gid=146996374&single=true&output=csv
-
         
     cpi_eur:
         data_ref: "EA19CPALTT01GYM"
         spreadsheet_id: "1j5cRDK-Ynq1sdCTThOHCuZwMOGyoLD27ytuT-6W8bR8"
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vRI8HkjtZG-IgXwU-tnXX4uBuN2WvO-fi_DgS76SImHDWacKnf0ice7HvzVSkRhO1j_BtEgN3W3Easr/pub?gid=949965906&single=true&output=csv
 
         
     cpi_deu:
         data_ref: "DEUCPALTT01CTGYM"
         spreadsheet_id: "1LIx9U_EZZBXPRaLlYQP_PMUt2yZiu78cNLjWTa0dsAY"     
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQhcBnKW3FhQTjsf9PuUC5L4wTEXR4kCV2UZfiaxFMvxD89zrrnx-y5Gr11EzUGtwWApJTRpnRrb58B/pub?output=csv
-
         
     cpi_gbr:
         data_ref: "GBRCPALTT01CTGYM"
         spreadsheet_id: "16XUtu1P8gIm9HyTIQYb8L6CGn7YVRg8v5Hu3e7-tP4A"         
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQF8DIZCu0AJkETOrSG_jDdmDbXDzEY14WDSqVs4FCByukm27sRsQRJYAPDQKPSUiXlNWjb4IQCjRoO/pub?output=csv
-
 
 
     cpi_chf:
         data_ref: "CHECPALTT01CTGYM"
         spreadsheet_id: "14MT5o6FtJ4kZvZ1Cj608sY-MOsNHRFOQsDxt5IdrA3M"   
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vT3liOCIu5e1Gt2bxJzcpZtIi0goyTzzr_AFKD4xfTfPVgwpa5uif0URfxASFv1VIjwC7FHWN8gxd9z/pub?gid=134775832&single=true&output=csv
-
 
     cpi_jpn:
         data_ref: "CPALTT01JPM659N"
         spreadsheet_id: "11HbFSgDVYt77aUQBOIJYV3ADCrRXbfI4wKnamFxGw0Y"    
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQB5vhhSj4UY-DJ-LjOIKDFiFEj0L_cvQ94yDcV_tJc7CrFEy2Kc8VVrFKfv5nEteEmRE3VfgEk5yme/pub?gid=683346418&single=true&output=csv
 
         
     cpi_can:
         data_ref: "CANCPALTT01CTGYM"
         spreadsheet_id: "1bcGI4rhPqGprgAldZqy3u1inOwxJ3ntrCnMt9eewNAI"         
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQTA1TFK9giW_U-8r7R4ZYveUs5iZhQAlpELDFW2_w91LWY5tRr6VEahwDIIITqTg6m9h5v27I5tzmK/pub?gid=1792688787&single=true&output=csv
 
 
     cpi_aus:
         data_ref: "CPALTT01AUQ659N"
         spreadsheet_id: "1fbIxFwQEZ4OTI3hPbgRC7e2yDT-qAsby6pWMD6U3qRc"   
         data_source: "FRED"
-        # URL Reference
-        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6CA8s0Jf8FM1VE1gYmJi-Flv4D4cNGvrxQ_w-kUFr-9T2vaLJu-8gOo3kPEcyN8-mNEfWgcqAvwSH/pub?gid=88209986&single=true&output=csv
-
-
-# SPGLOBAL downloads are not working due to security restrictions on their downloads
-#    oil_global:
-#        data_ref: "SPGLOBALOIL"
-#        spreadsheet_id: "1dWt2AUr-0Gu5MSR66AVDfJnm1BRkYB1cWfO7HJcz1B0"
-#        data_source: "SPGLOBAL"
-#        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
-#nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707"
-#   
-
-#   kevinostoll - 2024.06.12
-#   https://www.spglobal.com/spdji/en/indices/equity/sp-global-oil-index/#overview
-#   https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=5475707
-#
-#
-#        # URL Reference
-#        # https://docs.google.com/spreadsheets/d/e/2PACX-1vSv_ub6WYXeX40Q_1J0ErB5kgAmmbRxJ9WYBUCcvyGygbm74hbEmBl5hFVXiBADklgv0BGV5-IaM9d2/pub?gid=147257013&single=true&output=csv
-#
-#
-#
-#    oil_gas_ep:
-#        data_ref: "SPOILGASEP"
-#        spreadsheet_id: "1pl_rp4U570VhMkHJK-LyFxEDBvt131esIz3gYGmw3WU"
-#        data_source: "SPGLOBAL"
-#        url: "https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=Performa
-#nceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351"
-#
-#        # URL Reference
-#        # https://docs.google.com/spreadsheets/d/e/2PACX-1vQo-BwkdYP1pqdZT_Ubfh6tjEJfKYQj5aJ1PDkH40hgEKcMN54kUakpi2omOCxAasn3jwCuF90yVJde/pub?gid=1568399517&single=true&output=csv
-#  
-#   kevinostoll - 2024.06.12
-#   https://www.spglobal.com/spdji/en/indices/equity/sp-oil-gas-exploration-production-select-industry-index/#overview
-#   https://www.spglobal.com/spdji/en/idsexport/file.xls?hostIdentifier=48190c8c-42c4-46af-8d1a-0cd5db894797&redesignExport=true&languageId=1&selectedModule=PerformanceGraphView&selectedSubModule=Graph&yearFlag=oneYearFlag&indexId=2351
-
-
-
-
-
-
-
 
         
 
