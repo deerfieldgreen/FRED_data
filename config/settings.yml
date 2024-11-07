@@ -62,9 +62,7 @@ data_map_dict:
         data_ref: "IRLTLT01DEM156N"
         spreadsheet_id: "1n_SSgIRFwc6yK5V0ah9lA7w8coCVDCqzxqO93jWBtqQ"
         data_source: "FRED"
-        
-
-        
+    
     rate_eur_lt_gov:
         data_ref: "IRLTLT01EZM156N"
         spreadsheet_id: "1MLF8OFArGpDu6Ft7xqqfKFww-vJvtSHSHCN0b93xK4c" 

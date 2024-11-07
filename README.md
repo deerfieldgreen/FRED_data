@@ -3,6 +3,11 @@ https://fred.stlouisfed.org/
 
 Consumption of various data feeds from FRED website. All API based, generally speaking no transformation at this level; only consumption of the data
 
+## Destination
+- GitHub ./data directory - committ/push nightly
+- GCP CloudStorage Bucket
+- CSV format (for now)
+
 
 ## Example Series
 - DFF is the series name
