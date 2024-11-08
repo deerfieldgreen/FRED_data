@@ -5,6 +5,8 @@ __pycache*
 *.bak
 *.creds
 /.env
+/experiments/
+/data/
 
 
 #MAC OS

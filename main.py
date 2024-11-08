@@ -1,10 +1,12 @@
-import numpy as np
-import pandas as pd
-import os, sys, re, ast, csv, math, gc, random, enum, argparse, json, requests, time
-from datetime import datetime, timedelta
-import matplotlib.pyplot as plt
-import seaborn as sns
+import os
+import requests
+import time
 import warnings
+from datetime import datetime
+from io import StringIO
+
+import matplotlib.pyplot as plt
+import pandas as pd
 
 warnings.filterwarnings('ignore')
 pd.set_option('display.max_columns', None)  # to ensure console display all columns
@@ -13,10 +15,8 @@ pd.set_option('display.max_row', 50)
 plt.style.use('ggplot')
 from pathlib import Path
 from github import Github, GithubException
-import joblib
-from copy import deepcopy
-from src.utils import read_and_encode_file
-from huggingface_hub import HfApi, HfFolder
+from src.utils import read_and_encode_file, get_gcp_bucket
+from huggingface_hub import HfApi
 from datasets import Dataset
 
 
@@ -48,6 +48,7 @@ dotenv.load_dotenv(".env")
 
 PUSH_TO_GITHUB = False if os.environ.get("PUSH_TO_GITHUB") == 'False' else True
 PUSH_TO_HF = False if os.environ.get("PUSH_TO_HF") == 'False' else True
+PUSH_TO_GCP = False if os.environ.get("PUSH_TO_GCP") == 'False' else True
 
 
 
@@ -58,6 +59,8 @@ PUSH_TO_HF = False if os.environ.get("PUSH_TO_HF") == 'False' else True
 config = load_config(path=configPath / "settings.yml")
 fred_api_key = os.environ.get("FRED_API_KEY")
 fred = Fred(api_key=fred_api_key)
+
+bucket = get_gcp_bucket()
 
 data_map_dict = config["data_map_dict"]
 col_date = config["col_date"]
@@ -74,13 +77,19 @@ repo = g.get_repo(
 )  # Replace with your repo details
 
 hf_token = os.environ.get("HF_API_KEY")
-hf_api = HfApi()
+hf_api = HfApi(token=hf_token)
+print(hf_api.whoami())
 hf_user = "deerfieldgreen"  # Replace with your Hugging Face repo details
 
 ##############################################################################
 ## Main
 
+github_changes = []
+
 for data_type in data_map_dict:
+
+    # if data_type != 'total_public_debt':
+    #     continue
 
     data_ref = data_map_dict[data_type]["data_ref"]
     spreadsheet_id = data_map_dict[data_type]["spreadsheet_id"]
@@ -106,7 +115,7 @@ for data_type in data_map_dict:
         del_file(dataPath / filename)
 
         # urlretrieve(url, dataPath / filename)
-        headers = {'user-agent': 'Mozilla/5.0'}
+        # headers = {'user-agent': 'Mozilla/5.0'}
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -144,31 +153,61 @@ for data_type in data_map_dict:
         content = read_and_encode_file(dataPath / data_type / "data.csv", encode=False)
         try:
             git_file = repo.get_contents(f"data/{data_type}/data.csv")
-            repo.update_file(
-                git_file.path,
-                f"Updated file for {datetime.today().date()}",
-                content,
-                git_file.sha,
-            )
+            github_changes.append({
+                "path": git_file.path,
+                "content": content,
+                "sha": git_file.sha
+            })
         except Exception as e:
             if isinstance(e, GithubException) and e.status == 404:  # File not found
-                repo.create_file(
-                    f"data/{data_type}/data.csv",
-                    f"Created file for {datetime.today().date()}",
-                    content,
-                )
+                github_changes.append({
+                    "path": f"data/{data_type}/data.csv",
+                    "content": content,
+                    "sha": None
+                })
             else:
                 raise e
 
-        print(f"# {data_type}: Pushed to Github")
+        print(f"# {data_type}: Prepared for GitHub")
 
     # Push to HuggingFace
     if PUSH_TO_HF:
         hf_repo_id = f'{hf_user}/{data_type.lower()}'
         hf_dataset = Dataset.from_pandas(data_df)
-        hf_dataset.push_to_hub(repo_id=hf_repo_id)
+        hf_dataset.push_to_hub(repo_id=hf_repo_id, token=hf_token)
         print(f"# {data_type}: Pushed to Hugging Face")
+
+    if PUSH_TO_GCP:
+        csv_buffer = StringIO()
+        data_df.to_csv(csv_buffer, index=False)
+
+        # Name of the blob (file) in the bucket
+        blob_name = f'{data_type.lower()}.csv'
+        blob = bucket.blob(blob_name)
+
+        # Upload CSV directly from the memory buffer
+        blob.upload_from_string(csv_buffer.getvalue(), content_type='text/csv')
 
     print(f"# {data_type}: Updated")
 
     time.sleep(5)
+
+# After the loop, perform a single commit for all changes
+if PUSH_TO_GITHUB and github_changes:
+    commit_message = f"Updated files for {datetime.today().date()}"
+    for change in github_changes:
+        if change["sha"]:
+            repo.update_file(
+                change["path"],
+                commit_message,
+                change["content"],
+                change["sha"],
+            )
+        else:
+            repo.create_file(
+                change["path"],
+                commit_message,
+                change["content"],
+            )
+
+    print("All changes pushed to GitHub in a single commit.")
