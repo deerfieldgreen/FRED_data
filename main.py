@@ -19,9 +19,7 @@ from src.utils import read_and_encode_file, get_gcp_bucket
 from huggingface_hub import HfApi
 from datasets import Dataset
 
-##-##
-# os.chdir(sys.path[0])
-##-##
+
 
 root_folder = "."
 projectPath = Path(rf'{root_folder}')
@@ -52,6 +50,9 @@ PUSH_TO_GITHUB = False if os.environ.get("PUSH_TO_GITHUB") == 'False' else True
 PUSH_TO_HF = False if os.environ.get("PUSH_TO_HF") == 'False' else True
 PUSH_TO_GCP = False if os.environ.get("PUSH_TO_GCP") == 'False' else True
 
+
+
+
 ##############################################################################
 ## Settings
 
@@ -64,6 +65,10 @@ bucket = get_gcp_bucket()
 data_map_dict = config["data_map_dict"]
 col_date = config["col_date"]
 
+
+
+
+# TOKENS AND AUTH 
 ###########################################################################
 token = os.environ.get("GIT_TOKEN")
 g = Github(token)
@@ -97,9 +102,6 @@ for data_type in data_map_dict:
         data_df_init = pd.read_csv(dataPath / data_type / "data.csv")
     data_df_init[col_date] = pd.to_datetime(data_df_init[col_date])
 
-    # if data_ref not in data_df_init.columns:
-    #     print(f"# {data_type}: data column not found !!")
-    #     continue
 
     if data_source == "FRED":
         data_df_new = fred.get_series(data_ref)

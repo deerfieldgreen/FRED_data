@@ -7,3 +7,7 @@ __pycache*
 /.env
 /experiments/
 /data/
+
+
+#MAC OS
+.DS_Store

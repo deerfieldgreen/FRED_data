@@ -1,9 +1,9 @@
-# conda create -n fred_env python=3.10
-# conda deactivate
-# conda remove --name fred_env --all
 
-# pip install pandas numpy requests matplotlib seaborn joblib tqdm scikit-learn scipy pyyaml
-# pip install fredapi
+
+
+# We use these commands to deploy the job to GCP CloudRun Jobs
+# https://console.cloud.google.com/run/jobs/details/us-central1/fred-data-job/executions?hl=en&project=dfg-analytics-insights-prod
+
 
 # Docker
 - **IMPORTANT**: make sure to update requirements.txt file before pushing to docker
