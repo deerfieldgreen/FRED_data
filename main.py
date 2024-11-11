@@ -165,7 +165,7 @@ audit_df.to_csv("audit_trail.csv", index=False)
 if PUSH_TO_GITHUB:
     repo_object = Repo('.')
     git = repo_object.git
-    git.add()
+    git.add('--all')
     git.commit('-m', f"Updated Files for {datetime.today()}")
     git.push()
     print("All changes pushed to GitHub in a single commit.")
