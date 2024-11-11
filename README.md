@@ -9,6 +9,30 @@ Consumption of various data feeds from FRED website. All API based, generally sp
 - CSV format (for now)
 
 
+## Audit Trail
+- in the file audit_trail.csv, you have a few columns to track what's happening
+1. the name of the series from FRED
+2. the last date, which FRED has shared this datapoint (""FRESHNESS"")
+3. The last value, of this data point
+4. The last date which the audit code has validated the dataset
+
+
+```
+
+    # Collect audit information
+    last_date = data_df[col_date].max()
+    last_value = data_df.loc[data_df[col_date] == last_date, data_ref].values[0]
+    audit_data.append({
+        "Series Name": data_type,
+        "Last Date": last_date,
+        "Last Value": last_value,
+        "Last Request Datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+
+```
+
+
+
 ## Example Series
 - DFF is the series name
 - this is the Federal Funds Effective Rate
