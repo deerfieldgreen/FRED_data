@@ -4,113 +4,93 @@ col_date: "DATE"
 data_map_dict:
     dff: 
         data_ref: "DFF"
-        spreadsheet_id: "1K_NEb7HIIY0X5aCJ1kzrJh5Ieor-ACloU_V6VDotpzI"
         data_source: "FRED"
 
      
     frb_kc_lmci_monthly:
         data_ref: "FRBKCLMCILA"
-        spreadsheet_id: "1EjQWN_aM-F8ht6cik6iQGLkxhNI7mYYRMZ8wr1y41sY"
         data_source: "FRED"
     
     michigan_csi_monthly:
         data_ref: "UMCSENT"
-        spreadsheet_id: "1XuHtRbEZhDc6oihMAHIWXo0ckirG86Ssb2YJALGHdzA"
         data_source: "FRED"
 
         
     rate_aus_3m_bank:
         data_ref: "IR3TIB01AUM156N"
-        spreadsheet_id: "1HTxj7k8xHOVpEV-gDF09gdAO1Su-7pUDRn6qvq4c2Yo"
         data_source: "FRED"
 
         
     rate_cnd_3m_bank:
         data_ref: "IR3TIB01CAM156N"
-        spreadsheet_id: "1j16guRhZDdkyqnvBG6Jk40h6CX4_T-5PJU65i3hq6Ys"
         data_source: "FRED"
         
 
     rate_chf_3m_bank:
         data_ref: "IR3TIB01CHM156N"
-        spreadsheet_id: "1fw4QjxC8DcDrhJqiy1n_Eu4fI4gFq2ju9blIJ5l0Rug"
         data_source: "FRED"
         
     rate_deu_3m_bank:
         data_ref: "IR3TIB01DEM156N"
-        spreadsheet_id: "1BO0SyU2O4zG2xXyGXPO72GVs9oZoYllHsNzzxxUPCyY"
         data_source: "FRED"
         
     rate_eur_3m_bank:
         data_ref: "IR3TIB01EZM156N"
-        spreadsheet_id: "1nWRxnxpU3xwwYYDeBHnWJCpIPb_JW2GW0jhIiPGmf94"
         data_source: "FRED"
         
         
     rate_gbp_3m_bank:
         data_ref: "IR3TIB01GBM156N"
-        spreadsheet_id: "1fMTlBJDjJ6tf5jWs97lavu3LSNQxlomRNdm7BSaY1oY"
         data_source: "FRED"
         
     rate_jpn_3m_bank:
         data_ref: "IR3TIB01JPM156N"
-        spreadsheet_id: "18Dd_7Ht4vhz8LBSoUWVFE55vZDxORwZUqqd487XaI9U"
         data_source: "FRED"
         
         
     rate_deu_lt_gov:
         data_ref: "IRLTLT01DEM156N"
-        spreadsheet_id: "1n_SSgIRFwc6yK5V0ah9lA7w8coCVDCqzxqO93jWBtqQ"
         data_source: "FRED"
     
     rate_eur_lt_gov:
         data_ref: "IRLTLT01EZM156N"
-        spreadsheet_id: "1MLF8OFArGpDu6Ft7xqqfKFww-vJvtSHSHCN0b93xK4c" 
         data_source: "FRED"
         
 
     cpi_usa:
         data_ref: "USACPALTT01CTGYM"
-        spreadsheet_id: "1NCzj9EEAQ13QxcEDmqFeA99g8XzxrWLUCluM7yUyqr4"
         data_source: "FRED"
         
     cpi_eur:
         data_ref: "EA19CPALTT01GYM"
-        spreadsheet_id: "1j5cRDK-Ynq1sdCTThOHCuZwMOGyoLD27ytuT-6W8bR8"
         data_source: "FRED"
 
         
     cpi_deu:
         data_ref: "DEUCPALTT01CTGYM"
-        spreadsheet_id: "1LIx9U_EZZBXPRaLlYQP_PMUt2yZiu78cNLjWTa0dsAY"     
         data_source: "FRED"
         
     cpi_gbr:
         data_ref: "GBRCPALTT01CTGYM"
-        spreadsheet_id: "16XUtu1P8gIm9HyTIQYb8L6CGn7YVRg8v5Hu3e7-tP4A"         
         data_source: "FRED"
 
 
     cpi_chf:
         data_ref: "CHECPALTT01CTGYM"
-        spreadsheet_id: "14MT5o6FtJ4kZvZ1Cj608sY-MOsNHRFOQsDxt5IdrA3M"   
         data_source: "FRED"
 
     cpi_jpn:
         data_ref: "CPALTT01JPM659N"
-        spreadsheet_id: "11HbFSgDVYt77aUQBOIJYV3ADCrRXbfI4wKnamFxGw0Y"    
         data_source: "FRED"
 
         
     cpi_can:
         data_ref: "CANCPALTT01CTGYM"
-        spreadsheet_id: "1bcGI4rhPqGprgAldZqy3u1inOwxJ3ntrCnMt9eewNAI"         
         data_source: "FRED"
 
 
     cpi_aus:
         data_ref: "CPALTT01AUQ659N"
-        spreadsheet_id: "1fbIxFwQEZ4OTI3hPbgRC7e2yDT-qAsby6pWMD6U3qRc"   
         data_source: "FRED"
 
         

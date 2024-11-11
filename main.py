@@ -4,6 +4,7 @@ import time
 import warnings
 from datetime import datetime
 from io import StringIO
+import pickle
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -16,11 +17,7 @@ plt.style.use('ggplot')
 from pathlib import Path
 from github import Github, GithubException
 from src.utils import read_and_encode_file, get_gcp_bucket
-from huggingface_hub import HfApi
-from datasets import Dataset
 from git import Repo
-
-
 
 root_folder = "."
 projectPath = Path(rf'{root_folder}')
@@ -48,11 +45,8 @@ import dotenv
 dotenv.load_dotenv(".env")
 
 PUSH_TO_GITHUB = False if os.environ.get("PUSH_TO_GITHUB") == 'False' else True
-PUSH_TO_HF = False if os.environ.get("PUSH_TO_HF") == 'False' else True
 PUSH_TO_GCP = False if os.environ.get("PUSH_TO_GCP") == 'False' else True
-
-
-
+SAVE_AS_PICKLE = False if os.environ.get("SAVE_AS_PICKLE") == 'False' else True
 
 ##############################################################################
 ## Settings
@@ -66,9 +60,6 @@ bucket = get_gcp_bucket()
 data_map_dict = config["data_map_dict"]
 col_date = config["col_date"]
 
-
-
-
 # TOKENS AND AUTH 
 ###########################################################################
 token = os.environ.get("GIT_TOKEN")
@@ -77,32 +68,17 @@ repo = g.get_repo(
     "deerfieldgreen/FRED_data"
 )  # Replace with your repo details
 
-hf_token = os.environ.get("HF_API_KEY")
-hf_api = HfApi(token=hf_token)
-print(hf_api.whoami())
-hf_user = "deerfieldgreen"  # Replace with your Hugging Face repo details
-
 ##############################################################################
 ## Main
 
-github_changes = []
+audit_data = []
 
 for data_type in data_map_dict:
 
-    # if data_type != 'total_public_debt':
-    #     continue
-
     data_ref = data_map_dict[data_type]["data_ref"]
-    spreadsheet_id = data_map_dict[data_type]["spreadsheet_id"]
     data_source = data_map_dict[data_type]["data_source"]
 
     csv_file = dataPath / data_type / "data.csv"
-    if not os.path.exists(csv_file):
-        data_df_init = pd.DataFrame(columns=[col_date, data_ref])
-    else:
-        data_df_init = pd.read_csv(dataPath / data_type / "data.csv")
-    data_df_init[col_date] = pd.to_datetime(data_df_init[col_date])
-
 
     if data_source == "FRED":
         data_df_new = fred.get_series(data_ref)
@@ -110,13 +86,11 @@ for data_type in data_map_dict:
         data_df_new = data_df_new.reset_index()
         data_df_new.columns = [col_date, data_ref]
 
-    if data_source == "SPGLOBAL":
+    elif data_source == "SPGLOBAL":
         url = data_map_dict[data_type]["url"]
         filename = "TEMP_data.xls"
         del_file(dataPath / filename)
 
-        # urlretrieve(url, dataPath / filename)
-        # headers = {'user-agent': 'Mozilla/5.0'}
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -138,45 +112,35 @@ for data_type in data_map_dict:
         data_df_new[data_ref] = data_df_new[data_ref].astype(float)
         del_file(dataPath / filename)
 
-    data_df = pd.concat([data_df_init, data_df_new])
-    data_df.reset_index(drop=True, inplace=True)
+    else:
+        continue
 
-    data_df.drop_duplicates(col_date, keep='first', inplace=True)
-    data_df.reset_index(drop=True, inplace=True)
-    data_df.sort_values(col_date, ascending=True, inplace=True)
+    data_df = data_df_new
     data_df.reset_index(drop=True, inplace=True)
 
     data_df[col_date] = data_df[col_date].dt.date
 
-    data_df.to_csv(dataPath / data_type / "data.csv", index=False)
+    # Ensure the directory exists
+    csv_dir = dataPath / data_type
+    csv_dir.mkdir(parents=True, exist_ok=True)
 
-    # if PUSH_TO_GITHUB:
-    #     content = read_and_encode_file(dataPath / data_type / "data.csv", encode=False)
-    #     try:
-    #         git_file = repo.get_contents(f"data/{data_type}/data.csv")
-    #         github_changes.append({
-    #             "path": git_file.path,
-    #             "content": content,
-    #             "sha": git_file.sha
-    #         })
-    #     except Exception as e:
-    #         if isinstance(e, GithubException) and e.status == 404:  # File not found
-    #             github_changes.append({
-    #                 "path": f"data/{data_type}/data.csv",
-    #                 "content": content,
-    #                 "sha": None
-    #             })
-    #         else:
-    #             raise e
-    #
-    #     print(f"# {data_type}: Prepared for GitHub")
+    data_df.to_csv(csv_dir / "data.csv", index=False)
 
-    # Push to HuggingFace
-    if PUSH_TO_HF:
-        hf_repo_id = f'{hf_user}/{data_type.lower()}'
-        hf_dataset = Dataset.from_pandas(data_df)
-        hf_dataset.push_to_hub(repo_id=hf_repo_id, token=hf_token)
-        print(f"# {data_type}: Pushed to Hugging Face")
+    # Save as pickle if enabled
+    if SAVE_AS_PICKLE:
+        pickle_file = pickleDataPath / f"{data_type}.pkl"
+        with open(pickle_file, 'wb') as f:
+            pickle.dump(data_df, f)
+
+    # Collect audit information
+    last_date = data_df[col_date].max()
+    last_value = data_df.loc[data_df[col_date] == last_date, data_ref].values[0]
+    audit_data.append({
+        "Series Name": data_type,
+        "Last Date": last_date,
+        "Last Value": last_value,
+        "Last Request Datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
 
     if PUSH_TO_GCP:
         csv_buffer = StringIO()
@@ -192,13 +156,16 @@ for data_type in data_map_dict:
     print(f"# {data_type}: Updated")
 
     time.sleep(1)
-    break
+
+# Create audit CSV
+audit_df = pd.DataFrame(audit_data)
+audit_df.to_csv("audit_trail.csv", index=False)
 
 # After the loop, perform a single commit for all changes
 if PUSH_TO_GITHUB:
     repo_object = Repo('.')
     git = repo_object.git
-    git.add(update=True)
+    git.add('--all')
     git.commit('-m', f"Updated Files for {datetime.today()}")
     git.push()
     print("All changes pushed to GitHub in a single commit.")

@@ -19,6 +19,7 @@ fonttools==4.52.4
 fredapi==0.5.2
 frozenlist==1.4.1
 fsspec==2024.5.0
+GitPython
 google-api-core==2.19.2
 google-auth==2.34.0
 google-cloud-core==2.4.1
