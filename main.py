@@ -18,6 +18,7 @@ from github import Github, GithubException
 from src.utils import read_and_encode_file, get_gcp_bucket
 from huggingface_hub import HfApi
 from datasets import Dataset
+from git import Repo
 
 
 
@@ -149,26 +150,26 @@ for data_type in data_map_dict:
 
     data_df.to_csv(dataPath / data_type / "data.csv", index=False)
 
-    if PUSH_TO_GITHUB:
-        content = read_and_encode_file(dataPath / data_type / "data.csv", encode=False)
-        try:
-            git_file = repo.get_contents(f"data/{data_type}/data.csv")
-            github_changes.append({
-                "path": git_file.path,
-                "content": content,
-                "sha": git_file.sha
-            })
-        except Exception as e:
-            if isinstance(e, GithubException) and e.status == 404:  # File not found
-                github_changes.append({
-                    "path": f"data/{data_type}/data.csv",
-                    "content": content,
-                    "sha": None
-                })
-            else:
-                raise e
-
-        print(f"# {data_type}: Prepared for GitHub")
+    # if PUSH_TO_GITHUB:
+    #     content = read_and_encode_file(dataPath / data_type / "data.csv", encode=False)
+    #     try:
+    #         git_file = repo.get_contents(f"data/{data_type}/data.csv")
+    #         github_changes.append({
+    #             "path": git_file.path,
+    #             "content": content,
+    #             "sha": git_file.sha
+    #         })
+    #     except Exception as e:
+    #         if isinstance(e, GithubException) and e.status == 404:  # File not found
+    #             github_changes.append({
+    #                 "path": f"data/{data_type}/data.csv",
+    #                 "content": content,
+    #                 "sha": None
+    #             })
+    #         else:
+    #             raise e
+    #
+    #     print(f"# {data_type}: Prepared for GitHub")
 
     # Push to HuggingFace
     if PUSH_TO_HF:
@@ -190,24 +191,13 @@ for data_type in data_map_dict:
 
     print(f"# {data_type}: Updated")
 
-    time.sleep(5)
+    time.sleep(1)
+    break #TODO: temp
 
 # After the loop, perform a single commit for all changes
-if PUSH_TO_GITHUB and github_changes:
-    commit_message = f"Updated files for {datetime.today().date()}"
-    for change in github_changes:
-        if change["sha"]:
-            repo.update_file(
-                change["path"],
-                commit_message,
-                change["content"],
-                change["sha"],
-            )
-        else:
-            repo.create_file(
-                change["path"],
-                commit_message,
-                change["content"],
-            )
-
+if PUSH_TO_GITHUB:
+    repo_object = Repo('.')
+    git = repo_object.git
+    git.add(update=True)
+    git.commit('-m', f"Updated Files for {datetime.today()}")
     print("All changes pushed to GitHub in a single commit.")
