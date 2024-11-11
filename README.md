@@ -16,6 +16,18 @@ Consumption of various data feeds from FRED website. All API based, generally sp
 - https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23e1e9f0&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1320&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=DFF&scale=left&cosd=1954-07-01&coed=2024-11-05&line_color=%234572a7&link_values=false&line_style=solid&mark_type=none&mw=3&lw=3&ost=-99999&oet=99999&mma=0&fml=a&fq=Daily%2C%207-Day&fam=avg&fgst=lin&fgsnd=2020-02-01&line_index=1&transformation=lin&vintage_date=2024-11-07&revision_date=2024-11-07&nd=1954-07-01
 
 
+
+
+# Deployment
+
+We use these commands to deploy the job to GCP CloudRun Jobs
+https://console.cloud.google.com/run/jobs/details/us-central1/fred-data-job/executions?hl=en&project=dfg-analytics-insights-prod
+
+### Docker
+- **IMPORTANT**: make sure to update requirements.txt file before pushing to docker
+  docker build -t gcr.io/dfg-analytics-insights-prod/fred-data .
+  docker push gcr.io/dfg-analytics-insights-prod/fred-data
+
 ## FRED Data Series(es?)
 ```
 grep data_ref settings.yml 
