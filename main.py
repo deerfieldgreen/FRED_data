@@ -192,6 +192,7 @@ for data_type in data_map_dict:
     print(f"# {data_type}: Updated")
 
     time.sleep(1)
+    break
 
 # After the loop, perform a single commit for all changes
 if PUSH_TO_GITHUB:
