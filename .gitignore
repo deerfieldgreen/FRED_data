@@ -11,3 +11,4 @@ __pycache*
 
 #MAC OS
 .DS_Store
+/archive/
