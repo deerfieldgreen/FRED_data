@@ -192,7 +192,6 @@ for data_type in data_map_dict:
     print(f"# {data_type}: Updated")
 
     time.sleep(1)
-    break #TODO: temp
 
 # After the loop, perform a single commit for all changes
 if PUSH_TO_GITHUB:
@@ -200,4 +199,5 @@ if PUSH_TO_GITHUB:
     git = repo_object.git
     git.add(update=True)
     git.commit('-m', f"Updated Files for {datetime.today()}")
+    git.push()
     print("All changes pushed to GitHub in a single commit.")
