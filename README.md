@@ -10,7 +10,8 @@ Consumption of various data feeds from FRED website. All API based, generally sp
 
 
 ## Audit Trail
-- in the file audit_trail.csv, you have a few columns to track what's happening
+- In the file audit_trail.csv, you have a few columns to track what's happening
+- https://github.com/deerfieldgreen/FRED_data/blob/main/audit_trail.csv
 1. the name of the series from FRED
 2. the last date, which FRED has shared this datapoint (""FRESHNESS"")
 3. The last value, of this data point
