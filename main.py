@@ -120,7 +120,11 @@ for data_type in data_map_dict:
 
     data_df[col_date] = data_df[col_date].dt.date
 
-    data_df.to_csv(dataPath / data_type / "data.csv", index=False)
+    # Ensure the directory exists
+    csv_dir = dataPath / data_type
+    csv_dir.mkdir(parents=True, exist_ok=True)
+
+    data_df.to_csv(csv_dir / "data.csv", index=False)
 
     # Save as pickle if enabled
     if SAVE_AS_PICKLE:
@@ -155,7 +159,7 @@ for data_type in data_map_dict:
 
 # Create audit CSV
 audit_df = pd.DataFrame(audit_data)
-audit_df.to_csv(dataPath / "audit_trail.csv", index=False)
+audit_df.to_csv("audit_trail.csv", index=False)
 
 # After the loop, perform a single commit for all changes
 if PUSH_TO_GITHUB:
