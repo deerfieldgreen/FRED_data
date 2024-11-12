@@ -15,8 +15,8 @@ pd.set_option('display.float_format', '{:0.3f}'.format)
 pd.set_option('display.max_row', 50)
 plt.style.use('ggplot')
 from pathlib import Path
-from github import Github, GithubException
-from src.utils import read_and_encode_file, get_gcp_bucket
+from github import Github
+from src.utils import get_gcp_bucket
 from git import Repo
 
 root_folder = "."
@@ -28,7 +28,6 @@ configPath = projectPath / 'config'
 credsPath = projectPath / 'credentials'
 
 dataPath.mkdir(parents=True, exist_ok=True)
-pickleDataPath.mkdir(parents=True, exist_ok=True)
 configPath.mkdir(parents=True, exist_ok=True)
 
 ##############################################################################
@@ -85,33 +84,6 @@ for data_type in data_map_dict:
         data_df_new = data_df_new.dropna()
         data_df_new = data_df_new.reset_index()
         data_df_new.columns = [col_date, data_ref]
-
-    elif data_source == "SPGLOBAL":
-        url = data_map_dict[data_type]["url"]
-        filename = "TEMP_data.xls"
-        del_file(dataPath / filename)
-
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': 'http://www.spglobal.com/',
-            'Accept-Encoding': 'gzip, deflate',
-            'Connection': 'keep-alive'
-        }
-        r = requests.get(url, headers=headers)
-        with open(dataPath / filename, 'wb') as f:
-            f.write(r.content)
-
-        data_df_new = pd.read_excel(dataPath / filename, engine='openpyxl')
-        data_df_new.columns = [col_date, data_ref]
-        data_df_new = data_df_new.dropna()
-        data_df_new.reset_index(drop=True, inplace=True)
-        data_df_new = data_df_new.iloc[3:]
-        data_df_new.reset_index(drop=True, inplace=True)
-        data_df_new[col_date] = pd.to_datetime(data_df_new[col_date])
-        data_df_new[data_ref] = data_df_new[data_ref].astype(float)
-        del_file(dataPath / filename)
-
     else:
         continue
 
@@ -128,7 +100,7 @@ for data_type in data_map_dict:
 
     # Save as pickle if enabled
     if SAVE_AS_PICKLE:
-        pickle_file = pickleDataPath / f"{data_type}.pkl"
+        pickle_file = csv_dir / f"{data_type}.pkl"
         with open(pickle_file, 'wb') as f:
             pickle.dump(data_df, f)
 
