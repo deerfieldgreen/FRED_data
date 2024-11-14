@@ -144,6 +144,6 @@ if PUSH_TO_GITHUB:
     git = repo_object.git
     git.add('--all')
     git.commit('-m', f"Updated Files for {datetime.today()}")
-    git.pull()
+    git.pull('-s','ours')
     git.push()
     print("All changes pushed to GitHub in a single commit.")
