@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y git
 RUN git config --global user.email "abhi555shek@gmail.com"
 RUN git config --global user.name "Abhishek Gupta"
 
+# Set git to not rebase on pull
+RUN git config --global pull.rebase false
+
 WORKDIR /app
 
 COPY . /app
