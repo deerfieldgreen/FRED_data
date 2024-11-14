@@ -36,15 +36,17 @@ def read_and_encode_file(file_path, encode=True):
         return content
 
 def get_gcp_bucket():
-    # for local usage
-    # service_account_key_path = projectPath / 'dfg-analytics-insights-prod-0a3460e5b674.json'
-    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = str(service_account_key_path)
-    # storage_client = storage.Client()
-
-    # for GCP usage
-    # Initialize a storage client
-    credentials, project_id = default()
-    storage_client = storage.Client(credentials=credentials, project=project_id)
+    # Path to the service account key file
+    service_account_key_path = 'dfg-analytics-insights-prod-0a3460e5b674.json'
+    
+    if os.path.exists(service_account_key_path):
+        # Use the service account key file if it exists
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = str(service_account_key_path)
+        storage_client = storage.Client()
+    else:
+        # Use default credentials if the service account key file does not exist
+        credentials, project_id = default()
+        storage_client = storage.Client(credentials=credentials, project=project_id)
 
     # Name of your GCP bucket
     bucket_name = 'fred-stlouis'

@@ -55,6 +55,7 @@ fred_api_key = os.environ.get("FRED_API_KEY")
 fred = Fred(api_key=fred_api_key)
 
 bucket = get_gcp_bucket()
+print('Retrieved GCP bucket: {}'.format(bucket))
 
 data_map_dict = config["data_map_dict"]
 col_date = config["col_date"]
@@ -136,8 +137,14 @@ audit_df.to_csv("audit_trail.csv", index=False)
 # After the loop, perform a single commit for all changes
 if PUSH_TO_GITHUB:
     repo_object = Repo('.')
+    remote_url = f"https://{os.getenv('GIT_TOKEN')}@github.com/deerfieldgreen/FRED_data.git"
+    # Make sure the remote URL is set correctly
+    for remote in repo_object.remotes:
+        remote.set_url(remote_url)
+
     git = repo_object.git
     git.add('--all')
     git.commit('-m', f"Updated Files for {datetime.today()}")
+    git.pull()
     git.push()
     print("All changes pushed to GitHub in a single commit.")
