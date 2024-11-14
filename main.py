@@ -6,14 +6,13 @@ from datetime import datetime
 from io import StringIO
 import pickle
 
-import matplotlib.pyplot as plt
 import pandas as pd
 
 warnings.filterwarnings('ignore')
 pd.set_option('display.max_columns', None)  # to ensure console display all columns
 pd.set_option('display.float_format', '{:0.3f}'.format)
 pd.set_option('display.max_row', 50)
-plt.style.use('ggplot')
+
 from pathlib import Path
 from github import Github
 from src.utils import get_gcp_bucket
