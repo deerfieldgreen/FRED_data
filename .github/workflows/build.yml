@@ -1,0 +1,37 @@
+name: Build and Deploy to Cloud Run
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+      # Configure Workload Identity Federation and generate an access token.
+      #
+      # See https://github.com/google-github-actions/auth for more options,
+      # including authenticating via a JSON credentials file.
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: ${{ secrets.GCP_KEY }}
+
+    - name: Configure Docker
+      run: gcloud auth configure-docker
+
+    - name: Build Docker image
+      run: |
+        docker build -t gcr.io/dfg-analytics-insights-prod/fred_data:latest .
+
+    - name: Push Docker image to GCR
+      run: |
+        docker push gcr.io/dfg-analytics-insights-prod/fred_data:latest
