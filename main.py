@@ -125,6 +125,17 @@ for data_type in data_map_dict:
         # Upload CSV directly from the memory buffer
         blob.upload_from_string(csv_buffer.getvalue(), content_type='text/csv')
 
+        # Upload pickle file if SAVE_AS_PICKLE is enabled
+        if SAVE_AS_PICKLE:
+            pickle_buffer = pickle.dumps(data_df)
+
+            # Name of the pickle blob (file) in the bucket
+            pickle_blob_name = f'{data_type.lower()}.pkl'
+            pickle_blob = bucket.blob(pickle_blob_name)
+
+            # Upload pickle directly from the memory buffer
+            pickle_blob.upload_from_string(pickle_buffer, content_type='application/octet-stream')
+
     print(f"# {data_type}: Updated")
 
     time.sleep(1)
