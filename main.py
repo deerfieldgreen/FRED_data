@@ -39,7 +39,6 @@ from src.utils import (
 
 from fredapi import Fred
 import dotenv
-
 dotenv.load_dotenv(".env")
 
 PUSH_TO_GITHUB = False if os.environ.get("PUSH_TO_GITHUB") == 'False' else True
