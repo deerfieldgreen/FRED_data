@@ -18,6 +18,7 @@ def process_non_sofr_data(data_map_dict, fred, col_date, dataPath, SAVE_AS_PICKL
             time.sleep(1)
     return audit_data
 
+
 def process_sofr_data(sofr_series, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket):
     sofr_data = pd.DataFrame()
     audit_data = []
@@ -27,11 +28,11 @@ def process_sofr_data(sofr_series, fred, col_date, dataPath, SAVE_AS_PICKLE, PUS
         audit_data.append(collect_audit_info(data_df, series, series))
         print(f"# {series}: Updated")
         time.sleep(1)
-    
+
     sofr_data = sofr_data.sort_values(col_date).ffill()
-    save_combined_data(sofr_data, dataPath, "combined_sofr_data", SAVE_AS_PICKLE)
+    save_combined_data(sofr_data, dataPath, "sofr/combined_sofr_data", SAVE_AS_PICKLE)
     if PUSH_TO_GCP:
-        upload_combined_to_gcp(sofr_data, "sofr_data", bucket, SAVE_AS_PICKLE)
+        upload_combined_to_gcp(sofr_data, "sofr/sofr_data", bucket, SAVE_AS_PICKLE)
     return audit_data
 
 def fetch_and_process_data(fred, data_info, col_date):
@@ -79,9 +80,11 @@ def update_sofr_data(sofr_data, new_data, col_date, series):
         return pd.merge(sofr_data, new_data, on=col_date, how='outer')
 
 def save_combined_data(data, dataPath, filename, SAVE_AS_PICKLE):
-    data.to_csv(dataPath / f"{filename}.csv", index=False)
+    file_path = dataPath / filename
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    data.to_csv(f"{file_path}.csv", index=False)
     if SAVE_AS_PICKLE:
-        with open(dataPath / f"{filename}.pkl", 'wb') as f:
+        with open(f"{file_path}.pkl", 'wb') as f:
             pickle.dump(data, f)
 
 def upload_combined_to_gcp(data, filename, bucket, SAVE_AS_PICKLE):
