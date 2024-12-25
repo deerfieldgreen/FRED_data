@@ -1,12 +1,10 @@
 .idea*
 *.png
 __pycache*
-*.pkl
 *.bak
 *.creds
 /.env
 /experiments/
-/data/
 *.json
 
 
