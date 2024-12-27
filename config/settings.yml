@@ -93,6 +93,22 @@ data_map_dict:
         data_ref: "CPALTT01AUQ659N"
         data_source: "FRED"
 
+    SOFR:
+        data_ref: "SOFR"
+        data_source: "FRED"
+    SOFR30DAYAVG:
+        data_ref: "SOFR30DAYAVG"
+        data_source: "FRED"
+    SOFR90DAYAVG:
+        data_ref: "SOFR90DAYAVG"
+        data_source: "FRED"
+    SOFR180DAYAVG:
+        data_ref: "SOFR180DAYAVG"
+        data_source: "FRED"
+    SOFRINDEX:
+        data_ref: "SOFRINDEX"
+        data_source: "FRED"
+
         
 
 
