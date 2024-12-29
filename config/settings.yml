@@ -1,114 +1,121 @@
-
 col_date: "DATE"
 
 data_map_dict:
-    dff: 
+    dff:
         data_ref: "DFF"
+        enabled: true
         data_source: "FRED"
 
-     
     frb_kc_lmci_monthly:
         data_ref: "FRBKCLMCILA"
+        enabled: true
         data_source: "FRED"
-    
+
     michigan_csi_monthly:
         data_ref: "UMCSENT"
+        enabled: true
         data_source: "FRED"
 
-        
     rate_aus_3m_bank:
         data_ref: "IR3TIB01AUM156N"
+        enabled: true
         data_source: "FRED"
 
-        
     rate_cnd_3m_bank:
         data_ref: "IR3TIB01CAM156N"
+        enabled: true
         data_source: "FRED"
-        
 
     rate_chf_3m_bank:
         data_ref: "IR3TIB01CHM156N"
+        enabled: true
         data_source: "FRED"
-        
+
     rate_deu_3m_bank:
         data_ref: "IR3TIB01DEM156N"
+        enabled: true
         data_source: "FRED"
-        
+
     rate_eur_3m_bank:
         data_ref: "IR3TIB01EZM156N"
+        enabled: true
         data_source: "FRED"
-        
-        
+
     rate_gbp_3m_bank:
         data_ref: "IR3TIB01GBM156N"
+        enabled: true
         data_source: "FRED"
-        
+
     rate_jpn_3m_bank:
         data_ref: "IR3TIB01JPM156N"
+        enabled: true
         data_source: "FRED"
-        
-        
+
     rate_deu_lt_gov:
         data_ref: "IRLTLT01DEM156N"
+        enabled: true
         data_source: "FRED"
-    
+
     rate_eur_lt_gov:
         data_ref: "IRLTLT01EZM156N"
+        enabled: true
         data_source: "FRED"
-        
 
     cpi_usa:
         data_ref: "USACPALTT01CTGYM"
+        enabled: true
         data_source: "FRED"
-        
+
     cpi_eur:
         data_ref: "EA19CPALTT01GYM"
+        enabled: true
         data_source: "FRED"
 
-        
     cpi_deu:
         data_ref: "DEUCPALTT01CTGYM"
-        data_source: "FRED"
-        
-    cpi_gbr:
-        data_ref: "GBRCPALTT01CTGYM"
+        enabled: true
         data_source: "FRED"
 
+    cpi_gbr:
+        data_ref: "GBRCPALTT01CTGYM"
+        enabled: true
+        data_source: "FRED"
 
     cpi_chf:
         data_ref: "CHECPALTT01CTGYM"
+        enabled: true
         data_source: "FRED"
 
     cpi_jpn:
         data_ref: "CPALTT01JPM659N"
+        enabled: true
         data_source: "FRED"
 
-        
     cpi_can:
         data_ref: "CANCPALTT01CTGYM"
+        enabled: true
         data_source: "FRED"
-
 
     cpi_aus:
         data_ref: "CPALTT01AUQ659N"
+        enabled: true
         data_source: "FRED"
 
     SOFR:
-        data_ref: "SOFR"
-        data_source: "FRED"
-    SOFR30DAYAVG:
-        data_ref: "SOFR30DAYAVG"
-        data_source: "FRED"
-    SOFR90DAYAVG:
-        data_ref: "SOFR90DAYAVG"
-        data_source: "FRED"
-    SOFR180DAYAVG:
-        data_ref: "SOFR180DAYAVG"
-        data_source: "FRED"
-    SOFRINDEX:
-        data_ref: "SOFRINDEX"
+        data_ref:
+            - SOFR
+            - SOFR30DAYAVG
+            - SOFR90DAYAVG
+            - SOFR180DAYAVG
+            - SOFRINDEX
+        enabled: true
         data_source: "FRED"
 
-        
+    M1M2:
+        data_ref:
+            - M1SL
+            - M2SL
+        enabled: true
+        data_source: "FRED"
 
 
