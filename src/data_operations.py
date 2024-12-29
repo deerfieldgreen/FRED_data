@@ -7,6 +7,7 @@ from io import StringIO
 import pandas as pd
 from google.cloud import exceptions
 from tenacity import retry, stop_after_attempt, wait_exponential
+from typing import Dict, Any, List
 
 
 def process_data(data_map_dict, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket):
@@ -28,7 +29,16 @@ def process_single_dataset(data_type, data_info, fred, col_date, dataPath, SAVE_
         upload_to_gcp(data_df, data_type, bucket, SAVE_AS_PICKLE)
     return [collect_audit_info(data_df, data_type, data_info['data_ref'])]
 
-def process_combined_dataset(data_type, data_info, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket):
+def process_combined_dataset(
+    data_type: str,
+    data_info: Dict[str, Any],
+    fred: Fred,
+    col_date: str,
+    dataPath: Path,
+    SAVE_AS_PICKLE: bool,
+    PUSH_TO_GCP: bool,
+    bucket
+) -> List[Dict[str, Any]]:
     combined_data = pd.DataFrame()
     for series_id in data_info['data_ref']:
         data = fred.get_series(series_id)

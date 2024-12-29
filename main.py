@@ -41,7 +41,7 @@ def main():
     SAVE_AS_PICKLE = os.environ.get("SAVE_AS_PICKLE") != 'False'
 
     bucket = get_gcp_bucket() if PUSH_TO_GCP else None
-    logger.info('Retrieved GCP bucket: {}'.format(bucket))
+    logger.info(f'Retrieved GCP bucket: {bucket}')
 
     data_map_dict = config["data_map_dict"]
     col_date = config["col_date"]
