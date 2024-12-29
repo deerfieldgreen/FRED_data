@@ -1,9 +1,13 @@
-import pandas as pd
+import logging
+import pickle
 import time
 from datetime import datetime
 from io import StringIO
-import pickle
-from fredapi import Fred
+
+import pandas as pd
+from google.cloud import exceptions
+from tenacity import retry, stop_after_attempt, wait_exponential
+
 
 def process_data(data_map_dict, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket):
     audit_data = []
@@ -75,14 +79,32 @@ def collect_audit_info(data_df, series_name, data_ref):
         "Last Request Datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
 def upload_to_gcp(data_df, data_type, bucket, SAVE_AS_PICKLE):
-    csv_buffer = StringIO()
-    data_df.to_csv(csv_buffer, index=False)
-    blob_name = f'{data_type.lower()}.csv'
-    blob = bucket.blob(blob_name)
-    blob.upload_from_string(csv_buffer.getvalue(), content_type='text/csv')
-    if SAVE_AS_PICKLE:
-        pickle_buffer = pickle.dumps(data_df)
-        pickle_blob_name = f'{data_type.lower()}.pkl'
-        pickle_blob = bucket.blob(pickle_blob_name)
-        pickle_blob.upload_from_string(pickle_buffer, content_type='application/octet-stream')
+    logger = logging.getLogger(__name__)
+
+    try:
+        # Upload CSV
+        csv_buffer = StringIO()
+        data_df.to_csv(csv_buffer, index=False)
+        blob_name = f'{data_type.lower()}.csv'
+        blob = bucket.blob(blob_name)
+        blob.upload_from_string(csv_buffer.getvalue(), content_type='text/csv')
+        logger.info(f"Successfully uploaded {blob_name} to GCP")
+
+        # Upload pickle if enabled
+        if SAVE_AS_PICKLE:
+            pickle_buffer = pickle.dumps(data_df)
+            pickle_blob_name = f'{data_type.lower()}.pkl'
+            pickle_blob = bucket.blob(pickle_blob_name)
+            pickle_blob.upload_from_string(pickle_buffer, content_type='application/octet-stream')
+            logger.info(f"Successfully uploaded {pickle_blob_name} to GCP")
+
+    except exceptions.GoogleCloudError as e:
+        logger.error(f"GCP upload failed for {data_type}: {str(e)}")
+        raise  # Re-raise the exception to trigger a retry
+
+    except Exception as e:
+        logger.error(f"Unexpected error during GCP upload for {data_type}: {str(e)}")
+        raise  # Re-raise the exception to trigger a retry

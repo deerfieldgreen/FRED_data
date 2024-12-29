@@ -9,7 +9,7 @@ from google.auth import default
 from google.cloud import storage
 
 
-def setup_logging():
+def setup_logging() -> logging.Logger:
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
