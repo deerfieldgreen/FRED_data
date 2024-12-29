@@ -8,8 +8,8 @@ from git import Repo
 from fredapi import Fred
 import dotenv
 
-from src.utils import load_config, get_gcp_bucket
-from src.data_operations import process_non_sofr_data, process_sofr_data
+from src.utils import load_config, get_gcp_bucket, setup_logging
+from src.data_operations import process_data
 
 warnings.filterwarnings('ignore')
 pd.set_option('display.max_columns', None)
@@ -18,47 +18,37 @@ pd.set_option('display.max_row', 50)
 
 dotenv.load_dotenv(".env")
 
-# Setup paths
-root_folder = "."
-projectPath = Path(rf'{root_folder}')
-dataPath = projectPath / 'data'
-configPath = projectPath / 'config'
-credsPath = projectPath / 'credentials'
-
-dataPath.mkdir(parents=True, exist_ok=True)
-configPath.mkdir(parents=True, exist_ok=True)
-
-# Load configuration and setup
-config = load_config(path=configPath / "settings.yml")
-fred_api_key = os.environ.get("FRED_API_KEY")
-fred = Fred(api_key=fred_api_key)
-
-PUSH_TO_GITHUB = os.environ.get("PUSH_TO_GITHUB") != 'False'
-PUSH_TO_GCP = os.environ.get("PUSH_TO_GCP") != 'False'
-SAVE_AS_PICKLE = os.environ.get("SAVE_AS_PICKLE") != 'False'
-
-bucket = get_gcp_bucket()
-print('Retrieved GCP bucket: {}'.format(bucket))
-
-data_map_dict = config["data_map_dict"]
-col_date = config["col_date"]
-
-# GitHub setup
-token = os.environ.get("GIT_TOKEN")
-g = Github(token)
-repo = g.get_repo("deerfieldgreen/FRED_data")
-
-# Main execution
 def main():
-    audit_data = []
-    
-    # Process non-SOFR data
-    audit_data.extend(process_non_sofr_data(data_map_dict, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket))
-    
-    # Process SOFR data
-    sofr_series = ['SOFR', 'SOFR30DAYAVG', 'SOFR90DAYAVG', 'SOFR180DAYAVG', 'SOFRINDEX']
-    audit_data.extend(process_sofr_data(sofr_series, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket))
-    
+    # Setup logging
+    logger = setup_logging()
+
+    # Setup paths
+    root_folder = "."
+    projectPath = Path(rf'{root_folder}')
+    dataPath = projectPath / 'data'
+    configPath = projectPath / 'config'
+
+    dataPath.mkdir(parents=True, exist_ok=True)
+    configPath.mkdir(parents=True, exist_ok=True)
+
+    # Load configuration and setup
+    config = load_config(path=configPath / "settings.yml")
+    fred_api_key = os.environ.get("FRED_API_KEY")
+    fred = Fred(api_key=fred_api_key)
+
+    PUSH_TO_GITHUB = os.environ.get("PUSH_TO_GITHUB") != 'False'
+    PUSH_TO_GCP = os.environ.get("PUSH_TO_GCP") != 'False'
+    SAVE_AS_PICKLE = os.environ.get("SAVE_AS_PICKLE") != 'False'
+
+    bucket = get_gcp_bucket() if PUSH_TO_GCP else None
+    logger.info('Retrieved GCP bucket: {}'.format(bucket))
+
+    data_map_dict = config["data_map_dict"]
+    col_date = config["col_date"]
+
+    # Process data
+    audit_data = process_data(data_map_dict, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket)
+
     # Create audit CSV
     audit_df = pd.DataFrame(audit_data)
     audit_df.to_csv("audit_trail.csv", index=False)
@@ -66,6 +56,8 @@ def main():
     # Push to GitHub if enabled
     if PUSH_TO_GITHUB:
         push_to_github()
+
+    logger.info("Data processing and updates completed successfully.")
 
 def push_to_github():
     repo_object = Repo('.')

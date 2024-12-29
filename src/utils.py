@@ -1,12 +1,19 @@
 
-import os
-import numpy as np
-import pandas as pd
-import yaml
-from datetime import datetime, timedelta
 import base64
-from google.cloud import storage
+import logging
+import os
+from datetime import timedelta
+
+import yaml
 from google.auth import default
+from google.cloud import storage
+
+
+def setup_logging():
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s - %(levelname)s - %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S')
+    return logging.getLogger(__name__)
 
 
 def load_config(path):
