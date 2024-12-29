@@ -8,16 +8,24 @@ from fredapi import Fred
 def process_non_sofr_data(data_map_dict, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket):
     audit_data = []
     for data_type, data_info in data_map_dict.items():
-        if not data_type.startswith('SOFR'):
-            data_df = fetch_and_process_data(fred, data_info, col_date)
-            save_data(data_df, data_type, dataPath, SAVE_AS_PICKLE)
-            audit_data.append(collect_audit_info(data_df, data_type, data_info['data_ref']))
-            if PUSH_TO_GCP:
-                upload_to_gcp(data_df, data_type, bucket, SAVE_AS_PICKLE)
+        if not data_type.startswith('SOFR') and data_info.get('enabled', True):
+            if isinstance(data_info['data_ref'], list):
+                # Handle multiple data references (like M1M2)
+                if data_type == 'M1M2':
+                    audit_data.extend(process_m1m2_data(fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket))
+                else:
+                    # Handle other multi-reference datasets here if needed
+                    pass
+            else:
+                # Handle single data reference
+                data_df = fetch_and_process_data(fred, data_info, col_date)
+                save_data(data_df, data_type, dataPath, SAVE_AS_PICKLE)
+                audit_data.append(collect_audit_info(data_df, data_type, data_info['data_ref']))
+                if PUSH_TO_GCP:
+                    upload_to_gcp(data_df, data_type, bucket, SAVE_AS_PICKLE)
             print(f"# {data_type}: Updated")
             time.sleep(1)
     return audit_data
-
 
 def process_sofr_data(sofr_series, fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket):
     sofr_data = pd.DataFrame()
@@ -34,6 +42,36 @@ def process_sofr_data(sofr_series, fred, col_date, dataPath, SAVE_AS_PICKLE, PUS
     if PUSH_TO_GCP:
         upload_combined_to_gcp(sofr_data, "sofr/sofr_data", bucket, SAVE_AS_PICKLE)
     return audit_data
+
+def process_m1m2_data(fred, col_date, dataPath, SAVE_AS_PICKLE, PUSH_TO_GCP, bucket):
+    series = ['M1SL', 'M2SL']
+    combined_data = pd.DataFrame()
+    
+    for series_id in series:
+        data = fred.get_series(series_id)
+        df = pd.DataFrame(data, columns=[series_id])
+        df.index.name = col_date
+        df.reset_index(inplace=True)
+        
+        if combined_data.empty:
+            combined_data = df
+        else:
+            combined_data = pd.merge(combined_data, df, on=col_date, how='outer')
+    
+    # Forward fill NA values
+    combined_data = combined_data.ffill()
+    
+    save_combined_data(combined_data, dataPath, "m1m2/combined_m1m2_data", SAVE_AS_PICKLE)
+    if PUSH_TO_GCP:
+        upload_combined_to_gcp(combined_data, "m1m2/m1m2_data", bucket, SAVE_AS_PICKLE)
+    
+    return [{
+        "Series Name": "M1M2_Combined",
+        "Last Date": combined_data[col_date].max(),
+        "Last Value": f"M1: {combined_data['M1SL'].iloc[-1]:.2f}, M2: {combined_data['M2SL'].iloc[-1]:.2f}",
+        "Last Request Datetime": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }]
+
 
 def fetch_and_process_data(fred, data_info, col_date):
     data_ref = data_info['data_ref']

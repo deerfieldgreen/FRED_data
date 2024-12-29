@@ -108,6 +108,13 @@ data_map_dict:
     SOFRINDEX:
         data_ref: "SOFRINDEX"
         data_source: "FRED"
+    
+    M1SL:
+        data_ref: "M1SL"
+        data_source: "FRED"
+    M2SL:
+        data_ref: "M2SL"
+        data_source: "FRED"
 
         
 
