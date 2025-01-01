@@ -52,6 +52,7 @@ https://console.cloud.google.com/run/jobs/details/us-central1/fred-data-job/exec
 - **IMPORTANT**: make sure to update requirements.txt file before pushing to docker
   docker build -t gcr.io/dfg-analytics-insights-prod/fred-data .
   docker push gcr.io/dfg-analytics-insights-prod/fred-data
+docker run --env-file .env  gcr.io/dfg-analytics-insights-prod/fred-data
 
 ## FRED Data Series(es?)
 ```
